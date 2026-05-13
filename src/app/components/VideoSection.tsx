@@ -1,8 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { SectionHeader } from "./SectionLabel";
-import albumCover from "../../imports/image.png";
 import gatefold2 from "../../imports/GATEFOLD_02.jpg";
-import coverArt from "../../imports/BEELE_BORONDO_cover-01.jpg";
+import coverArt from "../../imports/Beele-borondo-album-cover.jpg";
 import artistPortrait from "../../imports/image-1.png";
 
 const YOUTUBE_CHANNEL = "https://www.youtube.com/@beele";
@@ -74,6 +73,8 @@ function FeaturedVideoCard({ video }: { video: VideoEntry }) {
       <img
         src={video.image}
         alt={video.title}
+        loading="lazy"
+        decoding="async"
         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
       />
       {/* Gradient overlay */}
@@ -137,6 +138,8 @@ function SupportingVideoCard({ video }: { video: VideoEntry }) {
       <img
         src={video.image}
         alt={video.title}
+        loading="lazy"
+        decoding="async"
         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />

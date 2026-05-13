@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import artistPhoto from "../../imports/download-1.jpg";
-import albumCover from "../../imports/image.png";
+import albumCover from "../../imports/Beele-borondo-5020Sessions-album-cover.jpg";
 import beeleLogo from "../../imports/beele-B.png";
 
 export function Hero() {
@@ -20,7 +20,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen bg-black overflow-hidden"
+      className="relative min-h-screen bg-black overflow-hidden pt-4"
       style={{ fontFamily: "'Space Grotesk', sans-serif" }}
     >
       {/* Mobile-only: scale headline font size to viewport width so "Borondo"
@@ -40,6 +40,8 @@ export function Hero() {
         <img
           src={artistPhoto}
           alt=""
+          fetchPriority="high"
+          decoding="sync"
           className="w-full h-full object-cover object-center"
           style={{
             filter: "grayscale(100%) contrast(1.06)",
@@ -54,16 +56,17 @@ export function Hero() {
 
       {/* ── Beéle "B" — large decorative background watermark ── */}
       <div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
+        className="absolute inset-0 flex items-center justify-start pointer-events-none select-none p-5"
         aria-hidden="true"
       >
         <img
           src={beeleLogo}
-          alt=""
+          alt="Beéle logo"
+          decoding="async"
           style={{
-            width: "min(62vw, 720px)",
-            opacity: 0.055,
-            filter: "invert(1)",
+            width: "min(62vw, 540px)",
+            opacity: 0.4,
+            filter: "invert(0)",
           }}
         />
       </div>
@@ -140,11 +143,12 @@ export function Hero() {
               >
                 <div
                   className="bg-white p-1.5"
-                  style={{ width: 56, boxShadow: "0 6px 28px rgba(0,0,0,0.75)" }}
+                  style={{ width: 80, boxShadow: "0 6px 28px rgba(0,0,0,0.75)" }}
                 >
                   <img
                     src={albumCover}
                     alt="Borondo — Álbum"
+                    decoding="async"
                     className="w-full aspect-square object-cover"
                   />
                 </div>

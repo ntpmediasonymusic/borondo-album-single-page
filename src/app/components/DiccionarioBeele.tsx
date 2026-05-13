@@ -130,7 +130,7 @@ function EntryCard({ entry, isSelected }: EntryCardProps) {
 
   return (
     <div
-      className={`flex-none w-[80vw] sm:w-[300px] lg:w-[330px] mr-3 lg:mr-5 transition-opacity duration-400 ${
+      className={`flex-none w-[80vw] sm:w-[300px] lg:w-[330px] mr-3 lg:mr-5 transition-opacity duration-[400ms] ${
         isSelected ? "opacity-100" : "opacity-35"
       }`}
     >
@@ -330,6 +330,7 @@ export function DiccionarioBeele() {
         {/* Centered: arrows + counter */}
         <div className="flex items-center gap-5">
           <button
+            type="button"
             onClick={scrollPrev}
             className="w-9 h-9 border border-white/20 flex items-center justify-center hover:border-white hover:bg-white hover:text-black transition-all text-white"
             aria-label="Entrada anterior"
@@ -354,6 +355,7 @@ export function DiccionarioBeele() {
           </div>
 
           <button
+            type="button"
             onClick={scrollNext}
             className="w-9 h-9 border border-white/20 flex items-center justify-center hover:border-white hover:bg-white hover:text-black transition-all text-white"
             aria-label="Siguiente entrada"

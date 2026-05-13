@@ -451,7 +451,7 @@ export function StyleGuide() {
                 { shape: "rounded" as const, label: "Redondeado" },
                 { shape: "tag" as const, label: "Tag / Etiqueta" },
                 { shape: "diamond" as const, label: "Diamante" },
-              ].map((s, i) => (
+              ].map((s) => (
                 <div key={s.shape} className="flex flex-col items-center gap-3">
                   {/* Inverted pair */}
                   <div className="flex flex-col gap-2 items-center">

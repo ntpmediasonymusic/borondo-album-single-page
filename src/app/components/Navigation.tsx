@@ -37,9 +37,6 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
       ? "text-black"
       : "text-white";
 
-  const borderColor =
-    theme === "light" ? "border-black" : scrolled ? "border-black" : "border-white";
-
   return (
     <>
       <nav
@@ -56,7 +53,7 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
               aria-label="Ir al inicio"
             >
               {/* Beéle "B" monogram mark */}
-              <div
+              {/* <div
                 className={`w-[26px] h-[26px] flex items-center justify-center border flex-shrink-0 ${borderColor}`}
               >
                 <span
@@ -70,7 +67,7 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
                 >
                   B
                 </span>
-              </div>
+              </div> */}
               {/* Wordmark */}
               <span
                 style={{
@@ -88,30 +85,30 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
             {/* Desktop nav links */}
             <div className={`hidden md:flex items-center gap-8 text-base tracking-widest uppercase ${textColor}`}
               style={{ fontWeight: 500 }}>
-              <button onClick={() => scrollTo("tracks")} className="hover:opacity-50 transition-opacity">
+              <button onClick={() => scrollTo("tracks")} className="hover:opacity-50 transition-opacity cursor-pointer">
                 Tracks
               </button>
-              <button onClick={() => scrollTo("videos")} className="hover:opacity-50 transition-opacity">
+              <button onClick={() => scrollTo("videos")} className="hover:opacity-50 transition-opacity cursor-pointer">
                 Videos
               </button>
-              <button onClick={() => scrollTo("stickers")} className="hover:opacity-50 transition-opacity">
+              <button onClick={() => scrollTo("stickers")} className="hover:opacity-50 transition-opacity cursor-pointer">
                 Stickers
               </button>
-              <button onClick={() => scrollTo("merch")} className="hover:opacity-50 transition-opacity">
+              {/* <button onClick={() => scrollTo("merch")} className="hover:opacity-50 transition-opacity">
                 Merch
-              </button>
+              </button> */}
               <a
                 href="https://wing.co"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:opacity-50 transition-opacity"
+                className="hover:opacity-50 transition-opacity cursor-pointer"
               >
                 Wyng
               </a>
               {/* Newsletter CTA — always black */}
               <button
                 onClick={() => scrollTo("registro")}
-                className="bg-black text-white px-4 py-2 hover:bg-black/75 transition-colors"
+                className="bg-black text-white px-4 py-2 hover:bg-black/75 transition-colors cursor-pointer"
                 style={{ fontWeight: 600 }}
               >
                 Newsletter
@@ -141,7 +138,7 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
               { label: "Tracks", id: "tracks" },
               { label: "Videos", id: "videos" },
               { label: "Stickers", id: "stickers" },
-              { label: "Merch", id: "merch" },
+              // { label: "Merch", id: "merch" },
               { label: "Comunidad", id: "registro" },
             ].map((item) => (
               <button

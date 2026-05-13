@@ -1,6 +1,6 @@
 import { Download } from "lucide-react";
 import { SectionHeader } from "./SectionLabel";
-import albumCover from "../../imports/image.png";
+import albumCover from "../../imports/Beele-borondo-album-cover.jpg";
 import gatefold from "../../imports/GATEFOLD_01.jpg";
 
 interface StickerProps {
@@ -133,8 +133,8 @@ export function WhatsAppStickers() {
           {/* ── Left: sticker grid + CTA ── */}
           <div>
             <div className="flex flex-wrap gap-4 items-center">
-              {stickers.map((s, i) => (
-                <Sticker key={i} {...s} />
+              {stickers.map((s) => (
+                <Sticker key={s.label} {...s} />
               ))}
             </div>
 
@@ -182,6 +182,8 @@ export function WhatsAppStickers() {
               <img
                 src={gatefold}
                 alt="Beéle — Borondo Gatefold"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover object-center"
                 style={{ filter: "contrast(1.02)" }}
               />
@@ -202,6 +204,8 @@ export function WhatsAppStickers() {
                 <img
                   src={albumCover}
                   alt="Borondo álbum"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full aspect-square object-cover"
                 />
               </div>
