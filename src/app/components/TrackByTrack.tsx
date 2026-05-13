@@ -425,9 +425,9 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand }: TrackSlid
 
   return (
     <div
-      className={`flex-none w-[72vw] sm:w-[290px] lg:w-[320px] mr-3 lg:mr-5 transition-opacity duration-[400ms] ${isSelected ? "opacity-100" : "opacity-40"}`}
+      className={`flex-none w-[72vw] sm:w-[290px] lg:w-[320px] mr-3 lg:mr-5 transition-opacity duration-[400ms] flex flex-col ${isSelected ? "opacity-100" : "opacity-40"}`}
     >
-      <div className="border border-black/10 bg-white group">
+      <div className="border border-black/10 bg-white group flex-1 flex flex-col">
         {/* Image */}
         <div className="relative overflow-hidden" style={{ aspectRatio: "1/1" }}>
           <img
@@ -479,7 +479,7 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand }: TrackSlid
         </div>
 
         {/* Info block */}
-        <div className="p-4">
+        <div className="p-4 flex-1 flex flex-col">
           {/* Number + bonus tag */}
           <div className="flex items-center justify-between mb-2">
             <span
@@ -557,7 +557,7 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand }: TrackSlid
           )}
 
           {/* Platform links */}
-          <div className="mt-3">
+          <div className="mt-auto pt-3">
             <div className="h-px bg-black/8 mb-3" />
             <div className="flex items-center justify-between">
               <span
