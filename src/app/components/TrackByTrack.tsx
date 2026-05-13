@@ -11,7 +11,7 @@ import NoTieneSentido from "../../imports/track-by-track/5020_Beeele_2026_Sessio
 import ByeBye from "../../imports/track-by-track/5020_Beeele_2026_Sessions_Cover Arts_Bye Bye_2_E.jpg";
 import EnLaMia from "../../imports/track-by-track/5020_Beeele_2026_Sessions_Cover Arts_En La Mia_1_E.jpg";
 import Quedate from "../../imports/track-by-track/5020_Beeele_2026_Sessions_Cover Arts_Quédate_2_E.jpg";
-import TopDiesel from "../../imports/track-by-track/5020_Beeele_2026_Sessions_Cover Arts_top diesel_1_E.jpg";
+import TopDiesel from "../../imports/track-by-track/5020_Beeele_2026_Sessions_Cover Arts_Top Diesel_1_E.jpg";
 import MiRefe from "../../imports/track-by-track/5020_Beeele_2026_Sessions_Cover Arts_Mi Refe_1_E.jpg";
 import FrenteAlmar from "../../imports/track-by-track/5020_Beeele_2026_Sessions_Cover Arts_Frente Al Mar_2_E.jpg";
 import SiTePillara from "../../imports/track-by-track/5020_Beeele_2026_Sessions_Cover Arts_Si Te Pillara_2_E.jpg";
