@@ -61,7 +61,7 @@ export function Hero() {
       >
         <img
           src={beeleLogo}
-          alt="Beéle logo"
+          alt=""
           decoding="async"
           style={{
             width: "min(62vw, 540px)",

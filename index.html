@@ -1,10 +1,123 @@
 
   <!DOCTYPE html>
-  <html lang="en">
+  <html lang="es">
     <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Single Page for Borondo Album</title>
+
+      <!-- Title & Core SEO -->
+      <title>BORONDO — Beéle | Álbum 2025</title>
+      <meta name="description" content="BORONDO es el nuevo álbum de Beéle: 26 canciones grabadas en las 5020 RCRDS Sessions. Explora el track by track, descubre el diccionario Beéle y únete a la comunidad." />
+      <meta name="robots" content="index, follow" />
+      <meta name="theme-color" content="#000000" />
+
+      <!-- TODO: Agrega la URL de producción cuando esté confirmada -->
+      <!-- <link rel="canonical" href="https://TU-DOMINIO.com/" /> -->
+
+      <!-- Open Graph / Facebook -->
+      <!-- TODO: Actualiza og:url y og:image con la URL y portada definitivas de producción -->
+      <meta property="og:type" content="music.album" />
+      <meta property="og:site_name" content="Beéle — BORONDO" />
+      <meta property="og:title" content="BORONDO — Beéle | Álbum 2025" />
+      <meta property="og:description" content="26 canciones, un recorrido entre el amor, la fiesta, el Caribe y la nostalgia. El álbum BORONDO de Beéle ya disponible en todas las plataformas." />
+      <meta property="og:image" content="/web-app-manifest-512x512.png" />
+      <meta property="og:image:width" content="512" />
+      <meta property="og:image:height" content="512" />
+      <meta property="og:image:alt" content="Portada del álbum BORONDO de Beéle" />
+      <meta property="og:locale" content="es_ES" />
+
+      <!-- Twitter / X Card -->
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="BORONDO — Beéle | Álbum 2025" />
+      <meta name="twitter:description" content="26 canciones, un recorrido entre el amor, la fiesta, el Caribe y la nostalgia. El álbum BORONDO de Beéle ya disponible en todas las plataformas." />
+      <meta name="twitter:image" content="/web-app-manifest-512x512.png" />
+      <meta name="twitter:image:alt" content="Portada del álbum BORONDO de Beéle" />
+
+      <!-- Favicons -->
+      <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+      <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+      <link rel="shortcut icon" href="/favicon.ico" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+      <link rel="manifest" href="/site.webmanifest" />
+
+      <!-- Preconnect for Google Fonts (reduces font load latency) -->
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+      <!-- Structured Data / Schema.org -->
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "name": "BORONDO — Beéle",
+            "description": "Sitio oficial del álbum BORONDO de Beéle. 26 canciones, track by track, diccionario y comunidad.",
+            "inLanguage": "es"
+          },
+          {
+            "@type": "MusicGroup",
+            "@id": "#artist",
+            "name": "Beéle",
+            "alternateName": "Beele",
+            "url": "https://www.youtube.com/channel/UCYAQgXVSRzUeNo34-RJOWUw",
+            "sameAs": [
+              "https://open.spotify.com/intl-es/artist/7a0XAaPaK2aDSqa8p3QnC7",
+              "https://music.apple.com/mx/artist/be%C3%A9le/1470139605",
+              "https://www.instagram.com/beele/",
+              "https://www.tiktok.com/@beele",
+              "https://www.youtube.com/channel/UCYAQgXVSRzUeNo34-RJOWUw",
+              "https://www.facebook.com/beelemusica"
+            ]
+          },
+          {
+            "@type": "MusicAlbum",
+            "@id": "#album",
+            "name": "Borondo",
+            "alternateName": "BORONDO",
+            "description": "BORONDO es el álbum de Beéle, grabado en las 5020 RCRDS Sessions. Un recorrido de 26 canciones entre el amor, la fiesta, el Caribe y la nostalgia.",
+            "numTracks": 26,
+            "datePublished": "2025",
+            "inLanguage": "es",
+            "byArtist": { "@id": "#artist" },
+            "recordLabel": {
+              "@type": "Organization",
+              "name": "Sony Music Entertainment",
+              "url": "https://www.sonymusic.com"
+            },
+            "track": [
+              { "@type": "MusicRecording", "position": "1",  "name": "anhélame",               "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "2",  "name": "que te vaya bien",            "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "3",  "name": "mad koknut",                  "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "4",  "name": "una vez al mes",              "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "5",  "name": "si mañana me muero",     "byArtist": [{ "@id": "#artist" }, { "@type": "MusicGroup", "name": "Thisizlondon" }] },
+              { "@type": "MusicRecording", "position": "6",  "name": "no tiene sentido",            "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "7",  "name": "arena",                       "byArtist": [{ "@id": "#artist" }, { "@type": "MusicGroup", "name": "Carla Morrison" }] },
+              { "@type": "MusicRecording", "position": "8",  "name": "quédate",                "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "9",  "name": "top diesel",                  "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "10", "name": "mi refe",                     "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "11", "name": "Dios me oyó",            "byArtist": [{ "@id": "#artist" }, { "@type": "MusicGroup", "name": "Marc Anthony" }] },
+              { "@type": "MusicRecording", "position": "12", "name": "frente al mar",               "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "13", "name": "si te pillara",               "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "14", "name": "i miss you",                  "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "15", "name": "hotel east",                  "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "16", "name": "una curita por favor",        "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "17", "name": "borondo",                     "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "18", "name": "sobelove",                    "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "19", "name": "en la mía",              "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "20", "name": "estrella fugaz",              "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "21", "name": "bye",                         "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "22", "name": "ya q",                        "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "23", "name": "time and space",              "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "24", "name": "algo bueno",                  "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "25", "name": "morena",                      "byArtist": { "@id": "#artist" } },
+              { "@type": "MusicRecording", "position": "26", "name": "hasta aquí llegué", "byArtist": [{ "@id": "#artist" }, { "@type": "MusicGroup", "name": "Nanpa Básico" }] }
+            ]
+          }
+        ]
+      }
+      </script>
+
       <style>html, body { height: 100%; margin: 0; } #root { height: 100%; }</style>
     </head>
 
@@ -13,4 +126,3 @@
       <script type="module" src="/src/main.tsx"></script>
     </body>
   </html>
-  

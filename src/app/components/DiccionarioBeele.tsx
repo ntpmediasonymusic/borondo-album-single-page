@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { SectionHeader } from "./SectionLabel";
@@ -19,119 +19,101 @@ interface DictEntry {
 const DICTIONARY: DictEntry[] = [
   {
     id: 1,
-    word: "Chimba",
-    phonetic: "/chim · ba/",
-    type: "adj · sust",
+    word: "Bomboclat",
+    phonetic: "/bom · bo · clat/",
+    type: "intj",
     definition:
-      "Algo extraordinario, de primera calidad. Lo mejor en su forma más pura.",
-    example: '"Ese track está muy chimba, parce."',
-    url: `${PLAYLIST_URL}&index=1`,
+      "Interjección de origen caribeño/jamaicano usada para expresar sorpresa, incredulidad, dolor, rabia o una emoción muy intensa. Según el contexto puede sentirse como un grito de impacto, una reacción visceral o una forma explosiva de decir que algo pegó fuerte. En el lenguaje del álbum, funciona bien para momentos donde el amor sorprende, hiere o desordena todo de golpe.",
+    example:
+      '"Bomboclat, yo pensé que ya te había olvidado y bastó una canción para volver a caer."',
+    url: "https://www.youtube.com/watch?v=5fvrGm2r48M&list=PL-WV71xWJQL_qAMtlN04781454eQNuhrE&index=4",
   },
   {
     id: 2,
-    word: "Parce",
-    phonetic: "/par · ce/",
-    type: "sust",
+    word: "Borondo",
+    phonetic: "/bo · ron · do/",
+    type: "sust · expr",
     definition:
-      "Tu gente. Tu círculo. El que estuvo antes del brillo y seguirá después.",
-    example: '"Ese es mi parce de toda la vida."',
-    url: `${PLAYLIST_URL}&index=2`,
+      "Una vuelta, paseo o caminata sin un rumbo demasiado definido. Es salir a moverse, perderse un rato, dejar que el camino lleve y que algo pase. En el universo del álbum, también puede leerse como un recorrido emocional: ir de una canción a otra atravesando deseo, nostalgia, fiesta, arrepentimiento y recuerdos frente al mar.",
+    example:
+      '"Nos dimos un borondo por la orilla y terminamos hablando de todo lo que nunca cerramos."',
+    url: "https://www.youtube.com/watch?v=XUmNBGDX2q4&list=PL-WV71xWJQL_qAMtlN04781454eQNuhrE&index=1",
   },
   {
     id: 3,
-    word: "Llave",
-    phonetic: "/lla · ve/",
-    type: "sust",
+    word: "Coleto",
+    phonetic: "/co · le · to/",
+    type: "adj · sust",
     definition:
-      "Más que un amigo. Tu mano derecha. El que tiene la combinación para abrirte.",
-    example: '"Él es mi llave, confío en él ciegamente."',
-    url: `${PLAYLIST_URL}&index=3`,
+      "Persona descomplicada, callejera o fuera del molde; alguien que se mueve con actitud propia y no se preocupa demasiado por verse correcto. En el Caribe colombiano también puede conectar con una estética popular, rumbera y de barrio: picó, champeta, calle, calor y mucha personalidad. En clave Beéle, es ese estado de andar despeinado por la vida, por la fiesta o por un amor que dejó marca.",
+    example:
+      '"Ando coleto desde que te vi bailando, con el corazón en la mano y la mente en otra parte."',
+    url: "https://www.youtube.com/watch?v=ijj0soBCYxA&list=PL-WV71xWJQL_qAMtlN04781454eQNuhrE&index=3",
   },
   {
     id: 4,
-    word: "Gonorrea",
-    phonetic: "/go · no · rre · a/",
-    type: "sust · adj",
+    word: "La Plena",
+    phonetic: "/la · ple · na/",
+    type: "sust · loc",
     definition:
-      "En boca de un parce es el mayor elogio. El contexto lo convierte en cariño.",
-    example: '"Eres una gonorrea, llave, te quiero mucho."',
-    url: `${PLAYLIST_URL}&index=4`,
+      "La verdad dicha de frente, sin rodeos ni adornos. Decir \"la plena\" es hablar claro, aceptar lo que realmente se siente y no esconder la emoción detrás del orgullo. En contexto romántico, funciona como una confesión: admitir que alguien todavía duele, que todavía importa o que una historia no se olvida tan fácil.",
+    example:
+      '"La plena es que desde que te fuiste, ninguna noche me sabe igual."',
+    url: "https://www.youtube.com/watch?v=0xoFaiQLB1U&list=PL-WV71xWJQL_qAMtlN04781454eQNuhrE&index=2",
   },
   {
     id: 5,
-    word: "Camello",
-    phonetic: "/ca · me · llo/",
-    type: "sust",
-    definition:
-      "El trabajo duro, la grind diaria. Lo que te da de comer y te sostiene.",
-    example: '"Hay que meterle al camello para llegar lejos."',
-    url: `${PLAYLIST_URL}&index=5`,
-  },
-  {
-    id: 6,
-    word: "Mane",
-    phonetic: "/ma · ne/",
-    type: "sust",
-    definition:
-      "Una persona. La forma más neutra y directa de nombrar al otro.",
-    example: '"Ese mane no para de hablar."',
-    url: `${PLAYLIST_URL}&index=6`,
-  },
-  {
-    id: 7,
-    word: "Sapear",
-    phonetic: "/sa · pe · ar/",
-    type: "verbo",
-    definition:
-      "Observar, espiar. Estar pendiente de lo que no te corresponde.",
-    example: '"Deja de sapear lo que hago."',
-    url: `${PLAYLIST_URL}&index=7`,
-  },
-  {
-    id: 8,
-    word: "Bacano",
-    phonetic: "/ba · ca · no/",
-    type: "adj",
-    definition:
-      "Chévere, genuino, de buen corazón. Una persona o momento que vale la pena.",
-    example: '"Qué bacano que pudiste venir, hermano."',
-    url: `${PLAYLIST_URL}&index=8`,
-  },
-  {
-    id: 9,
-    word: "Borondo",
-    phonetic: "/bo · ron · do/",
+    word: "Visaje",
+    phonetic: "/vi · sa · je/",
     type: "sust · adj",
     definition:
-      "El movimiento constante. Vivir en la calle, siempre en el mundo, sin parar.",
-    example: '"Toda la vida en el borondo, eso somos."',
-    url: `${PLAYLIST_URL}&index=9`,
-  },
-  {
-    id: 10,
-    word: "Sobelove",
-    phonetic: "/so · be · lo · ve/",
-    type: "sust",
-    definition:
-      "Del barrio para el mundo. La identidad que no cambia sin importar el tamaño.",
-    example: '"Sobelove: orgullo de donde vengo."',
-    url: `${PLAYLIST_URL}&index=10`,
+      "Algo o alguien que se hace notar demasiado; una actitud llamativa, intensa o evidente. También puede usarse para hablar de una situación que genera exposición, ruido o atención innecesaria. En contexto amoroso, \"visaje\" puede ser ese gesto que delata lo que uno siente: mirar de más, escribir de madrugada, ponerse raro o no poder disimular que todavía hay algo.",
+    example:
+      '"No hagas visaje, que se te nota en la cara que todavía me extrañas."',
+    url: "https://www.youtube.com/watch?v=IVbadHpdNnY&list=PL-WV71xWJQL_qAMtlN04781454eQNuhrE&index=5",
   },
 ];
+
+function YoutubeMusicIcon({ size = 13 }: { size?: number }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="currentColor" viewBox="0 0 16 16">
+      <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.01 2.01 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.01 2.01 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31 31 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.01 2.01 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A100 100 0 0 1 7.858 2zM6.4 5.209v4.818l4.157-2.408z" />
+    </svg>
+  );
+}
 
 // ─── Entry card ─────────────────────────────────────────────────────────────
 interface EntryCardProps {
   entry: DictEntry;
   isSelected: boolean;
+  isExpanded: boolean;
+  onToggleExpand: () => void;
+  onSelect: () => void;
 }
 
-function EntryCard({ entry, isSelected }: EntryCardProps) {
+function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: EntryCardProps) {
   const num = String(entry.id).padStart(2, "0");
+  const definitionRef = useRef<HTMLParagraphElement>(null);
+  const [isClamped, setIsClamped] = useState(false);
+
+  useEffect(() => {
+    if (isExpanded) return;
+    const el = definitionRef.current;
+    if (!el) return;
+    setIsClamped(el.scrollHeight > el.clientHeight);
+  }, [isExpanded]);
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (isSelected) return;
+    if ((e.target as HTMLElement).closest("a, button")) return;
+    onSelect();
+  };
 
   return (
     <div
-      className={`flex-none w-[80vw] sm:w-[300px] lg:w-[330px] mr-3 lg:mr-5 transition-opacity duration-[400ms] ${
-        isSelected ? "opacity-100" : "opacity-35"
+      onClick={handleClick}
+      className={`flex-none w-[80vw] sm:w-[300px] lg:w-[330px] mr-3 lg:mr-5 transition-opacity duration-[400ms] select-none ${
+        isSelected ? "opacity-100" : "opacity-35 cursor-pointer"
       }`}
     >
       <div className="border border-white/10 bg-white/[0.04] relative overflow-hidden group">
@@ -154,7 +136,7 @@ function EntryCard({ entry, isSelected }: EntryCardProps) {
         </div>
 
         <div className="p-6 relative z-10">
-          {/* Entry number */}
+          {/* Entry number + YT link */}
           <div className="flex items-center justify-between mb-5">
             <span
               className="text-white/15"
@@ -172,6 +154,7 @@ function EntryCard({ entry, isSelected }: EntryCardProps) {
               href={entry.url}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
               className="flex items-center gap-1 text-white/65 hover:text-white/90 transition-colors"
               aria-label={`Ver "${entry.word}" en YouTube`}
             >
@@ -179,7 +162,7 @@ function EntryCard({ entry, isSelected }: EntryCardProps) {
                 className="text-base tracking-[0.15em] uppercase"
                 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500 }}
               >
-                YT
+                <YoutubeMusicIcon size={24} />
               </span>
               <ArrowUpRight size={11} />
             </a>
@@ -221,7 +204,8 @@ function EntryCard({ entry, isSelected }: EntryCardProps) {
 
           {/* Definition */}
           <p
-            className="text-white/75 mb-4"
+            ref={definitionRef}
+            className={`text-white/75 mb-4${!isExpanded ? " line-clamp-4" : ""}`}
             style={{
               fontFamily: "'Space Grotesk', sans-serif",
               fontSize: "1rem",
@@ -230,6 +214,17 @@ function EntryCard({ entry, isSelected }: EntryCardProps) {
           >
             {entry.definition}
           </p>
+
+          {isClamped && (
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); onToggleExpand(); }}
+              className="mb-4 text-sm text-white/40 hover:text-white/70 transition-colors tracking-wide"
+              style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500 }}
+            >
+              {isExpanded ? "Ver menos" : "Ver más"}
+            </button>
+          )}
 
           {/* Example */}
           <blockquote
@@ -252,19 +247,33 @@ function EntryCard({ entry, isSelected }: EntryCardProps) {
 // ─── Section ────────────────────────────────────────────────────────────────
 export function DiccionarioBeele() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
+    loop: false,
     align: "start",
     dragFree: false,
+    containScroll: "keepSnaps",
   });
 
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [expandedEntryId, setExpandedEntryId] = useState<number | null>(null);
 
-  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+  const scrollPrev = useCallback(() => {
+    if (!emblaApi) return;
+    const current = emblaApi.selectedScrollSnap();
+    emblaApi.scrollTo(current === 0 ? DICTIONARY.length - 1 : current - 1);
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (!emblaApi) return;
+    const current = emblaApi.selectedScrollSnap();
+    emblaApi.scrollTo(current === DICTIONARY.length - 1 ? 0 : current + 1);
+  }, [emblaApi]);
 
   useEffect(() => {
     if (!emblaApi) return;
-    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
+    const onSelect = () => {
+      setSelectedIndex(emblaApi.selectedScrollSnap());
+      setExpandedEntryId(null);
+    };
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
     onSelect();
@@ -307,6 +316,11 @@ export function DiccionarioBeele() {
                 key={entry.id}
                 entry={entry}
                 isSelected={selectedIndex === entry.id - 1}
+                isExpanded={expandedEntryId === entry.id}
+                onToggleExpand={() =>
+                  setExpandedEntryId((prev) => (prev === entry.id ? null : entry.id))
+                }
+                onSelect={() => emblaApi?.scrollTo(entry.id - 1)}
               />
             ))}
           </div>
@@ -314,19 +328,7 @@ export function DiccionarioBeele() {
       </div>
 
       {/* Bottom nav */}
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-10 mt-7 flex items-center justify-center">
-        {/* Playlist link — left */}
-        <a
-          href={PLAYLIST_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute left-6 lg:left-10 flex items-center gap-1.5 text-white/65 hover:text-white transition-colors text-base tracking-widest uppercase"
-          style={{ fontWeight: 500 }}
-        >
-          Ver playlist
-          <ArrowUpRight size={9} />
-        </a>
-
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 mt-7 flex flex-col items-center gap-4 md:relative md:flex-row md:justify-center">
         {/* Centered: arrows + counter */}
         <div className="flex items-center gap-5">
           <button
@@ -363,6 +365,18 @@ export function DiccionarioBeele() {
             <ArrowRight size={13} />
           </button>
         </div>
+
+        {/* Playlist link */}
+        <a
+          href={PLAYLIST_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="md:absolute md:left-6 lg:left-10 flex items-center gap-1.5 text-white/65 hover:text-white transition-colors text-base tracking-widest uppercase"
+          style={{ fontWeight: 500 }}
+        >
+          Ver playlist
+          <ArrowUpRight size={9} />
+        </a>
       </div>
     </section>
   );

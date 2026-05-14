@@ -407,9 +407,10 @@ interface TrackSlideProps {
   isSelected: boolean;
   isExpanded: boolean;
   onToggleExpand: () => void;
+  onSelect: () => void;
 }
 
-function TrackSlide({ track, isSelected, isExpanded, onToggleExpand }: TrackSlideProps) {
+function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }: TrackSlideProps) {
   const num = String(track.id).padStart(2, "0");
   const noteRef = useRef<HTMLQuoteElement>(null);
   const [isClamped, setIsClamped] = useState(false);
@@ -423,9 +424,16 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand }: TrackSlid
 
   const isAlbumCover = track.image === albumCover;
 
+  const handleClick = (e: React.MouseEvent) => {
+    if (isSelected) return;
+    if ((e.target as HTMLElement).closest("a, button")) return;
+    onSelect();
+  };
+
   return (
     <div
-      className={`flex-none w-[72vw] sm:w-[290px] lg:w-[320px] mr-3 lg:mr-5 transition-opacity duration-[400ms] flex flex-col ${isSelected ? "opacity-100" : "opacity-40"}`}
+      onClick={handleClick}
+      className={`flex-none w-[72vw] sm:w-[290px] lg:w-[320px] mr-3 lg:mr-5 transition-opacity duration-[400ms] flex flex-col select-none ${isSelected ? "opacity-100" : "opacity-40 cursor-pointer"}`}
     >
       <div className="border border-black/10 bg-white group flex-1 flex flex-col">
         {/* Image */}
@@ -435,7 +443,8 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand }: TrackSlid
             alt={track.title}
             loading="lazy"
             decoding="async"
-            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-[1.03]"
+            draggable={false}
+            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-[1.03] pointer-events-none"
           />
 
           {/* Track number ghost overlay */}
@@ -463,6 +472,7 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand }: TrackSlid
               href={track.youtubeUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
               className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-colors duration-300 flex items-center justify-center"
               aria-label={`Ver video de ${track.title}`}
             >
@@ -548,7 +558,7 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand }: TrackSlid
           {isClamped && (
             <button
               type="button"
-              onClick={onToggleExpand}
+              onClick={(e) => { e.stopPropagation(); onToggleExpand(); }}
               className="mt-1.5 text-sm text-black/40 hover:text-black transition-colors tracking-wide"
               style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500 }}
             >
@@ -566,7 +576,7 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand }: TrackSlid
               >
                 Escuchar
               </span>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3" onClick={(e) => e.stopPropagation()}>
                 {track.spotifyUrl && (
                   <a href={track.spotifyUrl} target="_blank" rel="noopener noreferrer" className="text-[#3d3d3d] hover:text-black transition-colors" aria-label="Escuchar en Spotify">
                     <SpotifyIcon size={16} />
@@ -672,6 +682,7 @@ export function TrackByTrack() {
                 onToggleExpand={() =>
                   setExpandedTrackId((prev) => (prev === track.id ? null : track.id))
                 }
+                onSelect={() => emblaApi?.scrollTo(track.id - 1)}
               />
             ))}
           </div>
@@ -679,21 +690,7 @@ export function TrackByTrack() {
       </div>
 
       {/* Bottom navigation */}
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-10 mt-7 flex items-center justify-center">
-        {/* Playlist link */}
-        <a
-          href={PLAYLIST_BASE}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute left-6 lg:left-10 flex items-center gap-1.5 text-[#3d3d3d] hover:text-black transition-colors text-base tracking-widest uppercase"
-          style={{ fontWeight: 500 }}
-        >
-          Ver playlist
-          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
-          </svg>
-        </a>
-
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 mt-7 flex flex-col items-center gap-4 md:relative md:flex-row md:justify-center">
         {/* Centered: arrows + counter */}
         <div className="flex items-center gap-5">
           <button
@@ -730,6 +727,20 @@ export function TrackByTrack() {
             <ArrowRight size={13} />
           </button>
         </div>
+
+        {/* Playlist link */}
+        <a
+          href={PLAYLIST_BASE}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="md:absolute md:left-6 lg:left-10 flex items-center gap-1.5 text-[#3d3d3d] hover:text-black transition-colors text-base tracking-widest uppercase"
+          style={{ fontWeight: 500 }}
+        >
+          Ver playlist
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
+          </svg>
+        </a>
       </div>
     </section>
   );
