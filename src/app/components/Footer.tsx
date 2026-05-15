@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import { useNavigate, useLocation } from "react-router";
 import logo5020 from "../../imports/5020rcrds_LOGOS_PNG-05_(2).png";
 
 const SHOPIFY_URL = "https://shopify.com";
@@ -70,10 +71,16 @@ const legalLinks = [
 ];
 
 export function Footer() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
   const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    if (location.pathname !== "/") {
+      navigate(`/#${id}`);
+    } else {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const year = new Date().getFullYear();

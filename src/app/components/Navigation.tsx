@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router";
 import { Menu, X } from "lucide-react";
 
 interface NavigationProps {
@@ -8,6 +9,8 @@ interface NavigationProps {
 export function Navigation({ theme = "dark" }: NavigationProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,8 +22,12 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
 
   const scrollTo = (id: string) => {
     setMenuOpen(false);
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    if (location.pathname !== "/") {
+      navigate(`/#${id}`);
+    } else {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const navBg =
@@ -47,8 +54,8 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
           <div className="flex items-center justify-between h-16">
 
             {/* Logo — B monogram + Borondo wordmark */}
-            <button
-              onClick={() => scrollTo("hero")}
+            <Link
+              to="/"
               className={`flex items-center gap-2.5 hover:opacity-60 transition-opacity ${textColor}`}
               aria-label="Ir al inicio"
             >
@@ -80,7 +87,7 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
               >
                 Borondo
               </span>
-            </button>
+            </Link>
 
             {/* Desktop nav links */}
             <div className={`hidden md:flex items-center gap-8 text-base tracking-widest uppercase ${textColor}`}
@@ -97,14 +104,12 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
               <button onClick={() => scrollTo("merch")} className="hover:opacity-50 transition-opacity uppercase">
                 Merch
               </button>
-              <a
-                href="https://wing.co"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:opacity-50 transition-opacity cursor-pointer "
+              <Link
+                to="/cartas-a-beele"
+                className="hover:opacity-50 transition-opacity cursor-pointer"
               >
                 Cartas a Beéle
-              </a>
+              </Link>
               {/* Newsletter CTA — always black */}
               <button
                 onClick={() => scrollTo("registro")}
@@ -149,16 +154,14 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
                 {item.label}
               </button>
             ))}
-            <a
-              href="https://wing.co"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/cartas-a-beele"
               onClick={() => setMenuOpen(false)}
               className="text-left text-white/75 tracking-widest uppercase text-base border-b border-white/10 pb-6 hover:opacity-50 transition-opacity"
               style={{ fontWeight: 500 }}
             >
               Cartas a Beéle
-            </a>
+            </Link>
             {/* Newsletter CTA */}
             <button
               onClick={() => scrollTo("registro")}
