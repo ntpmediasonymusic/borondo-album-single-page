@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { ArrowUpRight, X } from "lucide-react";
 import { SectionHeader } from "./SectionLabel";
+import { RevealOnScroll } from "./RevealOnScroll";
 
 const PLAYLIST_URL =
   "https://www.youtube.com/playlist?list=PL-WV71xWJQL8YndZbY4j-JpoAg79xOvnI";
@@ -285,21 +286,26 @@ function VideoModal({
 export function VideoSection() {
   const [activeVideo, setActiveVideo] = useState<VideoEntry | null>(null);
   const handleClose = useCallback(() => setActiveVideo(null), []);
+  const [mobileVisible, setMobileVisible] = useState(2);
+  const sectionRef = useRef<HTMLElement>(null);
 
   const [featured, ...rest] = VIDEOS;
-  const sideVideos = rest.slice(0, 2);   // Vol.2 + La patadita
-  const bottomVideos = rest.slice(2);    // mi refe + no tiene sentido + top diesel
+  const sideVideos = rest.slice(0, 2);
+  const bottomVideos = rest.slice(2);
+
+  const allShown = mobileVisible >= VIDEOS.length;
 
   return (
     <>
       <section
+        ref={sectionRef}
         id="videos"
         className="bg-white py-12 lg:py-20"
         style={{ fontFamily: "'Space Grotesk', sans-serif" }}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           {/* Header */}
-          <div className="relative mb-6">
+          <RevealOnScroll animation="fade-up" className="relative mb-6">
             <SectionHeader label="Videos" title="Más relevantes" />
             <a
               href={PLAYLIST_URL}
@@ -311,40 +317,72 @@ export function VideoSection() {
               Ver video de Borondo
               <ArrowUpRight size={10} />
             </a>
+          </RevealOnScroll>
+
+          {/* ── Mobile layout (< lg) — flat list with progressive reveal ── */}
+          <div className="lg:hidden">
+            <RevealOnScroll animation="fade-up" delay={100} className="flex flex-col gap-3">
+              {VIDEOS.slice(0, mobileVisible).map((v, i) => (
+                <VideoCard key={v.id} video={v} onOpen={setActiveVideo} featured={i === 0} />
+              ))}
+            </RevealOnScroll>
+
+            <div className="mt-5 flex items-center gap-4">
+              <div className="h-px flex-1 bg-black/8" />
+              <button
+                type="button"
+                onClick={() => {
+                  if (allShown) {
+                    setMobileVisible(2);
+                    sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  } else {
+                    setMobileVisible((v) => Math.min(v + 2, VIDEOS.length));
+                  }
+                }}
+                className="flex-shrink-0 text-[#3d3d3d] hover:text-black transition-colors text-xs tracking-widest uppercase"
+                style={{ fontWeight: 500 }}
+              >
+                {allShown ? "Ver menos" : "Ver más"}
+              </button>
+              <div className="h-px flex-1 bg-black/8" />
+            </div>
           </div>
 
-          {/* Row 1 — featured (2/3) + side stack (1/3) */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 lg:gap-4 mb-3 lg:mb-4">
-            <div className="lg:col-span-2">
-              <VideoCard video={featured} onOpen={setActiveVideo} featured />
-            </div>
-            <div className="flex flex-col gap-3 lg:gap-4">
-              {sideVideos.map((v) => (
+          {/* ── Desktop layout (lg+) — original grid, unchanged ── */}
+          <div className="hidden lg:block">
+            {/* Row 1 — featured (2/3) + side stack (1/3) */}
+            <RevealOnScroll animation="fade-up" delay={80} className="grid grid-cols-3 gap-4 mb-4">
+              <div className="col-span-2">
+                <VideoCard video={featured} onOpen={setActiveVideo} featured />
+              </div>
+              <div className="flex flex-col gap-4">
+                {sideVideos.map((v) => (
+                  <VideoCard key={v.id} video={v} onOpen={setActiveVideo} />
+                ))}
+              </div>
+            </RevealOnScroll>
+
+            {/* Row 2 — three equal columns */}
+            <RevealOnScroll animation="fade-up" delay={200} className="grid grid-cols-3 gap-4">
+              {bottomVideos.map((v) => (
                 <VideoCard key={v.id} video={v} onOpen={setActiveVideo} />
               ))}
-            </div>
-          </div>
+            </RevealOnScroll>
 
-          {/* Row 2 — three equal columns */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 lg:gap-4">
-            {bottomVideos.map((v) => (
-              <VideoCard key={v.id} video={v} onOpen={setActiveVideo} />
-            ))}
-          </div>
-
-          {/* Bottom link */}
-          <div className="mt-7 flex items-center justify-between">
-            <div className="h-px flex-1 bg-black/8" />
-            <a
-              href={PLAYLIST_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ml-5 flex items-center gap-1.5 text-[#3d3d3d] hover:text-black transition-colors text-xs tracking-widest uppercase"
-              style={{ fontWeight: 500 }}
-            >
-              Ver video de Borondo
-              <ArrowUpRight size={10} />
-            </a>
+            {/* Bottom link */}
+            <RevealOnScroll animation="fade-in" delay={300} className="mt-7 flex items-center justify-between">
+              <div className="h-px flex-1 bg-black/8" />
+              <a
+                href={PLAYLIST_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ml-5 flex items-center gap-1.5 text-[#3d3d3d] hover:text-black transition-colors text-xs tracking-widest uppercase"
+                style={{ fontWeight: 500 }}
+              >
+                Ver video de Borondo
+                <ArrowUpRight size={10} />
+              </a>
+            </RevealOnScroll>
           </div>
         </div>
       </section>

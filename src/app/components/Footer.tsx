@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { useNavigate, useLocation } from "react-router";
 import logo5020 from "../../imports/5020rcrds_LOGOS_PNG-05_(2).png";
+import { RevealOnScroll } from "./RevealOnScroll";
 
 const SHOPIFY_URL = "https://shopify.com";
 
@@ -91,7 +92,7 @@ export function Footer() {
       style={{ fontFamily: "'Space Grotesk', sans-serif" }}
     >
       {/* Social media icons row */}
-      <div className="mb-12 flex items-center justify-center gap-7 flex-wrap">
+      <RevealOnScroll animation="fade-up" className="mb-12 flex items-center justify-center gap-7 flex-wrap">
         {socialLinks.map((link) => (
           <a
             key={link.name}
@@ -104,10 +105,10 @@ export function Footer() {
             {link.icon}
           </a>
         ))}
-      </div>
+      </RevealOnScroll>
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start items-center">
+        <RevealOnScroll animation="fade-up" delay={100} className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start items-center">
 
           {/* Column 1 — Brand */}
           <div>
@@ -182,10 +183,10 @@ export function Footer() {
               </button>
             ))}
           </div>
-        </div>
+        </RevealOnScroll>
 
         {/* Sony Music legal */}
-        <div className="mt-6 pt-6 border-t border-black/10">
+        <RevealOnScroll animation="fade-in" delay={200} className="mt-6 pt-6 border-t border-black/10">
           <p className="text-black text-xs leading-relaxed text-center mb-4">
             © {year}{" "}
             <a
@@ -211,15 +212,14 @@ export function Footer() {
               </span>
             ))}
           </p>
-        </div>
+        </RevealOnScroll>
         {/* Bottom bar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <p className="text-[#3d3d3d] text-sm tracking-wider">
-            © {year} Beéle / Borondo. Todos los derechos reservados.
           </p>
 
           {/* Beyonder credit */}
-          <p className="text-[#3d3d3d] text-sm tracking-wider">
+          <p className="text-[#3d3d3d] text-xs tracking-wider">
             Desarrollado por{" "}
             <a
               href="https://beyonderagency.com/en-us/"

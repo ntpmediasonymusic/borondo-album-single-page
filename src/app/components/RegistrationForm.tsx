@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ArrowRight, Check, Loader2 } from "lucide-react";
 import { SectionHeader } from "./SectionLabel";
+import { RevealOnScroll } from "./RevealOnScroll";
 import artistPortrait from "../../imports/image-1.png";
 
 /*
@@ -393,7 +394,7 @@ export function RegistrationForm() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           {/* Left: copy */}
-          <div>
+          <RevealOnScroll animation="fade-right">
             <SectionHeader
               label="Comunidad"
               title="Únete a la comunidad"
@@ -423,10 +424,10 @@ export function RegistrationForm() {
                 B
               </div>
             </div>
-          </div>
+          </RevealOnScroll>
 
           {/* Right: form */}
-          <div>
+          <RevealOnScroll animation="fade-left" delay={200}>
             {submitted ? (
               /* Success state — animated */
               <div
@@ -589,7 +590,15 @@ export function RegistrationForm() {
                     </div>
                     <span className="text-white/65 text-base leading-relaxed">
                       Acepto recibir comunicaciones de Beéle / Borondo. Puedo cancelar
-                      en cualquier momento. Ver política de privacidad.
+                      en cualquier momento.{" "}
+                      <a
+                        href="https://www.sonymusic.com/privacy-policy/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline hover:text-white transition-colors"
+                      >
+                        Ver política de privacidad.
+                      </a>
                     </span>
                   </label>
                   {errors.consent && (
@@ -630,7 +639,7 @@ export function RegistrationForm() {
                 </div>
               </form>
             )}
-          </div>
+          </RevealOnScroll>
         </div>
       </div>
     </section>

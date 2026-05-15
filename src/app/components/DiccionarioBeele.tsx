@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { SectionHeader } from "./SectionLabel";
+import { RevealOnScroll } from "./RevealOnScroll";
 
 const PLAYLIST_URL =
   "https://www.youtube.com/playlist?list=PL-WV71xWJQL_qAMtlN04781454eQNuhrE";
@@ -319,24 +320,28 @@ export function DiccionarioBeele() {
     >
       {/* Header */}
       <div className="max-w-7xl mx-auto px-6 lg:px-10 mb-6">
-        <SectionHeader label="Diccionario Beéle" title="El idioma de Beéle" light />
-        <p
-          className="text-white/65 text-base"
-          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-        >
-          {DICTIONARY.length} palabras · Desliza para explorar
-        </p>
+        <RevealOnScroll animation="fade-up">
+          <SectionHeader label="Diccionario Beéle" title="El idioma de Beéle" light />
+        </RevealOnScroll>
+        <RevealOnScroll animation="fade-up" delay={100}>
+          <p
+            className="text-white/65 text-base"
+            style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+          >
+            {DICTIONARY.length} palabras · Desliza para explorar
+          </p>
+        </RevealOnScroll>
       </div>
 
       {/* Progress bar */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 mb-5">
+      <RevealOnScroll animation="fade-in" delay={150} className="max-w-7xl mx-auto px-6 lg:px-10 mb-5">
         <div className="h-px bg-white/8 relative">
           <div
             className="absolute top-0 left-0 h-full bg-white transition-all duration-300"
             style={{ width: `${((selectedIndex + 1) / DICTIONARY.length) * 100}%` }}
           />
         </div>
-      </div>
+      </RevealOnScroll>
 
       {/* Embla carousel */}
       <div className="pl-6 lg:pl-10">
@@ -359,7 +364,7 @@ export function DiccionarioBeele() {
       </div>
 
       {/* Bottom nav */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 mt-7 flex flex-col items-center gap-4 md:relative md:flex-row md:justify-center">
+      <RevealOnScroll animation="fade-up" delay={200} className="max-w-7xl mx-auto px-6 lg:px-10 mt-7 flex flex-col items-center gap-4 md:relative md:flex-row md:justify-center">
         {/* Centered: arrows + counter */}
         <div className="flex items-center gap-5">
           <button
@@ -408,7 +413,7 @@ export function DiccionarioBeele() {
           Ver playlist
           <ArrowUpRight size={9} />
         </a>
-      </div>
+      </RevealOnScroll>
     </section>
   );
 }

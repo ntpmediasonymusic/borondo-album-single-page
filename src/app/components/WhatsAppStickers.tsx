@@ -1,5 +1,6 @@
 import { Download } from "lucide-react";
 import { SectionHeader } from "./SectionLabel";
+import { RevealOnScroll } from "./RevealOnScroll";
 import albumCover from "../../imports/Beele-borondo-album-cover.jpg";
 import gatefold from "../../imports/GATEFOLD_01.jpg";
 import stickerBorondo from "../../imports/stickers/beeleStickerBorondo.png";
@@ -86,13 +87,15 @@ export function WhatsAppStickers() {
       style={{ fontFamily: "'Space Grotesk', sans-serif" }}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <SectionHeader label="WhatsApp Stickers" title="Llévalos contigo" light />
+        <RevealOnScroll animation="fade-up">
+          <SectionHeader label="WhatsApp Stickers" title="Llévalos contigo" light />
+        </RevealOnScroll>
 
         {/* Two-column layout: stickers + gatefold visual */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
 
           {/* ── Left: sticker grid + CTA ── */}
-          <div>
+          <RevealOnScroll animation="fade-right" delay={100}>
             <div className="grid grid-cols-3 gap-4">
               {stickers.map((s) => (
                 <a
@@ -158,10 +161,10 @@ export function WhatsAppStickers() {
             >
               Descarga los stickers desde tu celular para guardarlos y usarlos en tus conversaciones.
             </p>
-          </div>
+          </RevealOnScroll>
 
           {/* ── Right: Gatefold editorial image ── */}
-          <div className="relative">
+          <RevealOnScroll animation="fade-left" delay={250} className="relative">
             {/* Gatefold photo — tall crop */}
             <div
               className="relative overflow-hidden"
@@ -214,7 +217,7 @@ export function WhatsAppStickers() {
                 Borondo
               </span>
             </div>
-          </div>
+          </RevealOnScroll>
 
         </div>
       </div>

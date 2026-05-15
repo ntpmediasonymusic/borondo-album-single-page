@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { SectionHeader } from "./SectionLabel";
+import { RevealOnScroll } from "./RevealOnScroll";
 
 import artistDark from "../../imports/download-1.jpg";
 import albumCover from "../../imports/Beele-borondo-album-cover.jpg";
@@ -650,24 +651,28 @@ export function TrackByTrack() {
     >
       {/* Section header */}
       <div className="max-w-7xl mx-auto px-6 lg:px-10 mb-6">
-        <SectionHeader label="Track by Track" title="Explora el album" />
-        <p
-          className="text-[#3d3d3d] text-base"
-          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-        >
-          {TRACKS.length} canciones · Desliza para explorar
-        </p>
+        <RevealOnScroll animation="fade-up">
+          <SectionHeader label="Track by Track" title="Explora el album" />
+        </RevealOnScroll>
+        <RevealOnScroll animation="fade-up" delay={100}>
+          <p
+            className="text-[#3d3d3d] text-base"
+            style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+          >
+            {TRACKS.length} canciones · Desliza para explorar
+          </p>
+        </RevealOnScroll>
       </div>
 
       {/* Progress bar */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 mb-5">
+      <RevealOnScroll animation="fade-in" delay={150} className="max-w-7xl mx-auto px-6 lg:px-10 mb-5">
         <div className="h-px bg-black/8 relative">
           <div
             className="absolute top-0 left-0 h-full bg-black transition-all duration-300"
             style={{ width: `${((selectedIndex + 1) / TRACKS.length) * 100}%` }}
           />
         </div>
-      </div>
+      </RevealOnScroll>
 
       {/* Embla carousel */}
       <div className="pl-6 lg:pl-10">
@@ -690,7 +695,7 @@ export function TrackByTrack() {
       </div>
 
       {/* Bottom navigation */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 mt-7 flex flex-col items-center gap-4 md:relative md:flex-row md:justify-center">
+      <RevealOnScroll animation="fade-up" delay={200} className="max-w-7xl mx-auto px-6 lg:px-10 mt-7 flex flex-col items-center gap-4 md:relative md:flex-row md:justify-center">
         {/* Centered: arrows + counter */}
         <div className="flex items-center gap-5">
           <button
@@ -741,7 +746,7 @@ export function TrackByTrack() {
             <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
           </svg>
         </a>
-      </div>
+      </RevealOnScroll>
     </section>
   );
 }

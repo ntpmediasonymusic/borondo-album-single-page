@@ -16,7 +16,9 @@ export function LettersToBeele() {
       sessionStorage.removeItem(FLAG);
       const script = document.createElement("script");
       script.async = true;
-      script.src = "https://dnsl4xr6unrmf.cloudfront.net/js/campaign.js";
+      script.src = "https://dnsl4xr6unrmf.cloudfront.net/js/campaign.eebc54fd.js";
+      script.integrity = "sha384-vjC1EXFjsSlKA3QP8KjOspJdRKdvD1JuyQhUQteL4vi6jimLXe910MiN5PzIQe1v";
+      script.crossOrigin = "anonymous";
       document.body.appendChild(script);
     }
   }, []);
@@ -56,7 +58,7 @@ export function LettersToBeele() {
               fontWeight: 500,
             }}
           >
-            UGC · Fan Experience
+            Fan Experience
           </span>
 
           <h1
@@ -92,8 +94,8 @@ export function LettersToBeele() {
         <div className="w-full">
           <div
             className="wyng-experience"
-            data-wyng-id="6a05f67b203616c5d2001e38"
-            data-wyng-token="k7Ah84auA1mWamORwchdxyoDht0kvdHToO02aHOB6a05f67cb3977ca05ccd633b"
+             data-wyng-id="6a05f67b203616c5d2001e38"
+             data-wyng-token="k7Ah84auA1mWamORwchdxyoDht0kvdHToO02aHOB6a05f67cb3977ca05ccd633b"
           />
         </div>
       </main>

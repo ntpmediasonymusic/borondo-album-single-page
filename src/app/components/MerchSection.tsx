@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ArrowUpRight, X, ZoomIn } from "lucide-react";
 import { SectionHeader } from "./SectionLabel";
+import { RevealOnScroll } from "./RevealOnScroll";
 import vinyl1 from "../../imports/merch/borondo-vinyl/borondo-vinyl-1.jpg";
 import vinyl2 from "../../imports/merch/borondo-vinyl/borondo-vinyl-2.jpg";
 import vinyl3 from "../../imports/merch/borondo-vinyl/borondo-vinyl-3.jpg";
@@ -88,7 +89,7 @@ function FeatureProduct({ product }: { product: MerchProduct }) {
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-start">
 
         {/* ── Gallery (3/5 cols) ── */}
-        <div className="lg:col-span-3 flex flex-col gap-4 justify-center align-middle items-center">
+        <RevealOnScroll animation="fade-right" className="lg:col-span-3 flex flex-col gap-4 justify-center align-middle items-center">
 
           {/* Main image */}
           <button
@@ -133,10 +134,10 @@ function FeatureProduct({ product }: { product: MerchProduct }) {
               </button>
             ))}
           </div>
-        </div>
+        </RevealOnScroll>
 
         {/* ── Product info (2/5 cols) ── */}
-        <div className="lg:col-span-2 flex flex-col gap-6 lg:pt-2">
+        <RevealOnScroll animation="fade-left" delay={200} className="lg:col-span-2 flex flex-col gap-6 lg:pt-2">
 
           {/* Category */}
           <span
@@ -218,7 +219,7 @@ function FeatureProduct({ product }: { product: MerchProduct }) {
           >
             La tienda oficial de Beéle es operada por una plataforma externa. Serás redirigido al hacer clic.
           </p>
-        </div>
+        </RevealOnScroll>
       </div>
 
       {/* ── Lightbox modal ── */}
@@ -313,7 +314,9 @@ export function MerchSection() {
       style={{ fontFamily: "'Space Grotesk', sans-serif" }}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <SectionHeader label="Merch" title="La colección" />
+        <RevealOnScroll animation="fade-up">
+          <SectionHeader label="Merch" title="La colección" />
+        </RevealOnScroll>
 
         {isSingle ? (
           <FeatureProduct product={merchProducts[0]} />

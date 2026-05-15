@@ -5,6 +5,21 @@
   50%       { transform: translateY(-10px); }
 }
 
+@keyframes menuSlideIn {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.mobile-menu-enter {
+  animation: menuSlideIn 0.28s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu-enter {
+    animation: none;
+  }
+}
+
 .sticker-img {
   animation: levitate var(--levitate-duration, 3s) ease-in-out var(--levitate-delay, 0s) infinite;
   will-change: transform;

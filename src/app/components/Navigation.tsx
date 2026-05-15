@@ -54,8 +54,9 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
           <div className="flex items-center justify-between h-16">
 
             {/* Logo — B monogram + Borondo wordmark */}
-            <Link
-              to="/"
+            <button
+              type="button"
+              onClick={() => scrollTo("hero")}
               className={`flex items-center gap-2.5 hover:opacity-60 transition-opacity ${textColor}`}
               aria-label="Ir al inicio"
             >
@@ -83,11 +84,12 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
                   fontWeight: 800,
                   letterSpacing: "0.2em",
                   textTransform: "uppercase",
+                  cursor: "pointer",
                 }}
               >
                 Borondo
               </span>
-            </Link>
+            </button>
 
             {/* Desktop nav links */}
             <div className={`hidden md:flex items-center gap-8 text-base tracking-widest uppercase ${textColor}`}
@@ -135,7 +137,7 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
       {/* Mobile Menu */}
       {menuOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black flex flex-col items-start justify-center px-8"
+          className="mobile-menu-enter fixed inset-0 z-40 bg-black flex flex-col items-start justify-center px-8"
           style={{ fontFamily: "'Space Grotesk', sans-serif" }}
         >
           <div className="flex flex-col gap-8 w-full">
