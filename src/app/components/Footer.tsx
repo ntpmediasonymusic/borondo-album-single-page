@@ -156,12 +156,12 @@ export function Footer() {
           </div>
 
           {/* Column 2 — Navigation links */}
-          <div className="flex flex-row justify-between">
+          <div className="flex flex-row flex-wrap justify-between">
             {[
               { label: "Tracks", id: "tracks" },
               { label: "Videos", id: "videos" },
               { label: "Stickers", id: "stickers" },
-              // { label: "Merch", id: "merch" },
+              { label: "Merch", id: "merch" },
               // { label: "Comunidad", id: "registro" },
             ].map((item) => (
               <button

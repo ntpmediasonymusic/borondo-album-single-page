@@ -251,10 +251,16 @@ export function DiccionarioBeele() {
     align: "start",
     dragFree: false,
     containScroll: "keepSnaps",
+    watchResize: false,
+    watchDrag: (_, evt) => {
+      const target = (evt as Event).target as HTMLElement | null;
+      return !target?.closest("button, a");
+    },
   });
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [expandedEntryId, setExpandedEntryId] = useState<number | null>(null);
+  const selectedIndexRef = useRef(0);
 
   const scrollPrev = useCallback(() => {
     if (!emblaApi) return;
@@ -270,14 +276,39 @@ export function DiccionarioBeele() {
 
   useEffect(() => {
     if (!emblaApi) return;
+
     const onSelect = () => {
-      setSelectedIndex(emblaApi.selectedScrollSnap());
+      const snap = emblaApi.selectedScrollSnap();
+      setSelectedIndex(snap);
+      selectedIndexRef.current = snap;
       setExpandedEntryId(null);
     };
+
+    const onReInit = () => {
+      emblaApi.scrollTo(selectedIndexRef.current, true);
+    };
+
     emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", onSelect);
+    emblaApi.on("reInit", onReInit);
     onSelect();
-    return () => { emblaApi.off("select", onSelect); };
+    return () => {
+      emblaApi.off("select", onSelect);
+      emblaApi.off("reInit", onReInit);
+    };
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    let timer: ReturnType<typeof setTimeout>;
+    const handleResize = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => emblaApi.reInit(), 150);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", handleResize);
+    };
   }, [emblaApi]);
 
   return (

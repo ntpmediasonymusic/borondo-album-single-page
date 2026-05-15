@@ -85,30 +85,30 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
             {/* Desktop nav links */}
             <div className={`hidden md:flex items-center gap-8 text-base tracking-widest uppercase ${textColor}`}
               style={{ fontWeight: 500 }}>
-              <button onClick={() => scrollTo("tracks")} className="hover:opacity-50 transition-opacity cursor-pointer">
+              <button onClick={() => scrollTo("tracks")} className="hover:opacity-50 transition-opacity cursor-pointer uppercase">
                 Tracks
               </button>
-              <button onClick={() => scrollTo("videos")} className="hover:opacity-50 transition-opacity cursor-pointer">
+              <button onClick={() => scrollTo("videos")} className="hover:opacity-50 transition-opacity cursor-pointer uppercase">
                 Videos
               </button>
-              <button onClick={() => scrollTo("stickers")} className="hover:opacity-50 transition-opacity cursor-pointer">
+              <button onClick={() => scrollTo("stickers")} className="hover:opacity-50 transition-opacity cursor-pointer uppercase">
                 Stickers
               </button>
-              {/* <button onClick={() => scrollTo("merch")} className="hover:opacity-50 transition-opacity">
+              <button onClick={() => scrollTo("merch")} className="hover:opacity-50 transition-opacity uppercase">
                 Merch
-              </button> */}
+              </button>
               <a
                 href="https://wing.co"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:opacity-50 transition-opacity cursor-pointer"
+                className="hover:opacity-50 transition-opacity cursor-pointer "
               >
-                Wyng
+                Cartas a Beéle
               </a>
               {/* Newsletter CTA — always black */}
               <button
                 onClick={() => scrollTo("registro")}
-                className="bg-black text-white px-4 py-2 hover:bg-black/75 transition-colors cursor-pointer"
+                className="bg-black text-white px-4 py-2 hover:bg-black/75 transition-colors cursor-pointer uppercase"
                 style={{ fontWeight: 600 }}
               >
                 Newsletter
@@ -138,8 +138,7 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
               { label: "Tracks", id: "tracks" },
               { label: "Videos", id: "videos" },
               { label: "Stickers", id: "stickers" },
-              // { label: "Merch", id: "merch" },
-              { label: "Comunidad", id: "registro" },
+              { label: "Merch", id: "merch" },
             ].map((item) => (
               <button
                 key={item.id}
@@ -158,7 +157,7 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
               className="text-left text-white/75 tracking-widest uppercase text-base border-b border-white/10 pb-6 hover:opacity-50 transition-opacity"
               style={{ fontWeight: 500 }}
             >
-              Wyng ↗
+              Cartas a Beéle
             </a>
             {/* Newsletter CTA */}
             <button

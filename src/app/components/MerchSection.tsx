@@ -1,111 +1,311 @@
-import { ArrowUpRight } from "lucide-react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { ArrowUpRight, X, ZoomIn } from "lucide-react";
 import { SectionHeader } from "./SectionLabel";
-import artistWalking from "../../imports/download-2.jpg";
-
-const SHOPIFY_URL = "https://shopify.com"; // Replace with actual Shopify store URL
+import vinyl1 from "../../imports/merch/borondo-vinyl/borondo-vinyl-1.jpg";
+import vinyl2 from "../../imports/merch/borondo-vinyl/borondo-vinyl-2.jpg";
+import vinyl3 from "../../imports/merch/borondo-vinyl/borondo-vinyl-3.jpg";
+import vinyl4 from "../../imports/merch/borondo-vinyl/borondo-vinyl-4.jpg";
 
 interface MerchProduct {
-  id: number;
-  name: string;
+  id: string;
   category: string;
-  image: string;
-  size: "large" | "medium" | "small";
+  title: string;
+  description: string;
+  descriptionExtra: string;
+  images: string[];
+  imageAlts: string[];
+  productUrl: string;
 }
 
-const PRODUCTS: MerchProduct[] = [
+const merchProducts: MerchProduct[] = [
   {
-    id: 1,
-    name: "Hoodie Borondo",
-    category: "Sudaderas",
-    image:
-      "https://images.unsplash.com/photo-1605979021029-59f394c7178e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
-    size: "large",
-  },
-  {
-    id: 2,
-    name: "Camiseta Callejero",
-    category: "Camisetas",
-    image:
-      "https://images.unsplash.com/photo-1650024691730-927f83674032?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
-    size: "medium",
-  },
-  {
-    id: 3,
-    name: "Cap Borondo",
-    category: "Accesorios",
-    image:
-      "https://images.unsplash.com/photo-1625988359400-52abbc745748?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
-    size: "medium",
+    id: "borondo-vinyl",
+    category: "Vinyl",
+    title: "Beéle — BORONDO 2LP Vinyl",
+    description:
+      "Edición en vinilo 2LP de BORONDO, el universo musical de Beéle reunido en formato físico. Incluye canciones como 'Anhélame', 'Nadie', 'Miss You', 'Hotel', 'Sobelove', 'Borondo', 'Morenita', 'Hasta Aquí Llegué' y más tracks del álbum.",
+    descriptionExtra:
+      "Tracklist: Anhélame · Qué Te Va Bien · Nadie · Eno x Cora · Miss You · Hotel · Un Celu Por Favor · Borondo · Sobelove · En Lo Mío · Estrella Fugaz · Bye · Ya Que · Fine and Space · Algo Bueno · Morenita · Hasta Aquí Llegué + Bonus Track",
+    images: [vinyl1, vinyl2, vinyl3, vinyl4],
+    imageAlts: [
+      "Portada del vinilo Beéle BORONDO",
+      "Contraportada del vinilo Beéle BORONDO",
+      "Detalle del disco vinilo Beéle BORONDO",
+      "Contenido interior del vinilo Beéle BORONDO",
+    ],
+    productUrl:
+      "https://vinyl.sonymusic.com/?srsltid=AfmBOooUVVN6zNU4UGCwW3aZygTbuYaX38Vc48kCB1yUQevFN-pLZiUN",
   },
 ];
 
-interface MerchCardProps {
-  product: MerchProduct;
-}
+// ─── Feature layout (single product) ────────────────────────────────────────
 
-function MerchCard({ product }: MerchCardProps) {
+function FeatureProduct({ product }: { product: MerchProduct }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const userInteracted = useRef(false);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const selectImage = useCallback((index: number, manual = false) => {
+    setActiveIndex(index);
+    if (manual) {
+      userInteracted.current = true;
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    }
+  }, []);
+
+  // Auto-rotate every 4 s, stops on manual interaction
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      if (!userInteracted.current) {
+        setActiveIndex((prev) => (prev + 1) % product.images.length);
+      }
+    }, 4000);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [product.images.length]);
+
+  // Close lightbox on Escape
+  useEffect(() => {
+    if (!lightboxOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightboxOpen(false);
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [lightboxOpen]);
+
+  // Lock body scroll when lightbox is open
+  useEffect(() => {
+    document.body.style.overflow = lightboxOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [lightboxOpen]);
+
   return (
-    <a
-      href={SHOPIFY_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group block"
-      aria-label={`Ver ${product.name} en la tienda`}
-    >
-      {/* Image */}
-      <div
-        className="relative overflow-hidden bg-black/5 mb-4"
-        style={{ aspectRatio: product.size === "large" ? "3/4" : "4/5" }}
-      >
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-full object-cover transition-all duration-700 group-hover:scale-[1.03]"
-        />
-        {/* Hover CTA overlay */}
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-end p-5">
-          <span
-            className="translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 flex items-center gap-2 bg-white text-black px-4 py-2 text-xs tracking-widest uppercase"
-            style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}
-          >
-            Ver en Tienda
-            <ArrowUpRight size={12} />
-          </span>
-        </div>
-      </div>
+    <>
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-start">
 
-      {/* Info */}
-      <div className="flex items-start justify-between">
-        <div>
-          <p
-            className="text-[#3d3d3d] text-base tracking-[0.2em] uppercase mb-1"
+        {/* ── Gallery (3/5 cols) ── */}
+        <div className="lg:col-span-3 flex flex-col gap-4 justify-center align-middle items-center">
+
+          {/* Main image */}
+          <button
+            type="button"
+            className="relative w-full max-w-md aspect-square bg-black overflow-hidden group cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
+            onClick={() => setLightboxOpen(true)}
+            aria-label={`Ver imagen ampliada: ${product.imageAlts[activeIndex]}`}
+          >
+            <img
+              src={product.images[activeIndex]}
+              alt={product.imageAlts[activeIndex]}
+              className="w-full h-full object-contain transition-opacity duration-500"
+            />
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+              <ZoomIn
+                size={28}
+                className="text-white opacity-0 group-hover:opacity-80 transition-opacity duration-300 drop-shadow-lg"
+              />
+            </div>
+          </button>
+
+          {/* Thumbnails */}
+          <div className="grid grid-cols-4 gap-2">
+            {product.images.map((src, i) => (
+              <button
+                type="button"
+                key={i}
+                onClick={() => selectImage(i, true)}
+                aria-pressed={activeIndex === i ? "true" : "false"}
+                aria-label={product.imageAlts[i]}
+                className={`relative aspect-square overflow-hidden bg-black focus:outline-none focus-visible:ring-2 focus-visible:ring-black transition-opacity duration-200 ${
+                  activeIndex === i
+                    ? "ring-2 ring-black opacity-100"
+                    : "opacity-50 hover:opacity-80"
+                }`}
+              >
+                <img
+                  src={src}
+                  alt={product.imageAlts[i]}
+                  className="w-full h-full object-contain"
+                />
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Product info (2/5 cols) ── */}
+        <div className="lg:col-span-2 flex flex-col gap-6 lg:pt-2">
+
+          {/* Category */}
+          <span
+            className="text-[#3d3d3d] tracking-[0.25em] uppercase text-sm"
             style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500 }}
           >
             {product.category}
-          </p>
-          <h3
-            className="text-black group-hover:opacity-50 transition-opacity"
+          </span>
+
+          {/* Title */}
+          <h2
+            className="text-black leading-none"
             style={{
               fontFamily: "'Raleway', sans-serif",
-              fontSize: "1.1rem",
-              fontWeight: 700,
-              letterSpacing: "0.08em",
+              fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)",
+              fontWeight: 800,
+              letterSpacing: "0.04em",
               textTransform: "uppercase",
             }}
           >
-            {product.name}
-          </h3>
+            {product.title}
+          </h2>
+
+          {/* Divider */}
+          <div className="h-px bg-black/10 w-full" />
+
+          {/* Description */}
+          <div>
+            <p
+              className="text-[#3d3d3d] leading-relaxed"
+              style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.95rem" }}
+            >
+              {product.description}
+            </p>
+
+            {/* Expandable tracklist */}
+            <div
+              className="overflow-hidden transition-all duration-300"
+              style={{ maxHeight: expanded ? "200px" : "0px" }}
+            >
+              <p
+                className="text-[#3d3d3d]/70 leading-relaxed mt-4 text-sm"
+                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+              >
+                {product.descriptionExtra}
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setExpanded((v) => !v)}
+              className="mt-3 text-sm tracking-widest uppercase underline underline-offset-4 text-black/50 hover:text-black transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
+              style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}
+            >
+              {expanded ? "Ver menos" : "Ver más"}
+            </button>
+          </div>
+
+          {/* Divider */}
+          <div className="h-px bg-black/10 w-full" />
+
+          {/* CTA */}
+          <a
+            href={product.productUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Ir a la tienda oficial para comprar ${product.title}`}
+            className="flex items-center justify-center gap-3 bg-black text-white px-8 py-4 text-sm tracking-[0.2em] uppercase hover:bg-black/80 active:bg-black/90 transition-colors w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
+            style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700 }}
+          >
+            IR A LA TIENDA
+            <ArrowUpRight size={16} />
+          </a>
+
+          {/* Disclaimer */}
+          <p
+            className="text-black/35 text-xs leading-relaxed"
+            style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+          >
+            La tienda oficial de Beéle es operada por una plataforma externa. Serás redirigido al hacer clic.
+          </p>
         </div>
-        <ArrowUpRight
-          size={16}
-          className="text-black/20 group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all mt-1"
-        />
       </div>
-    </a>
+
+      {/* ── Lightbox modal ── */}
+      {lightboxOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={product.imageAlts[activeIndex]}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+          onClick={() => setLightboxOpen(false)}
+        >
+          <button
+            type="button"
+            onClick={() => setLightboxOpen(false)}
+            aria-label="Cerrar imagen"
+            className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          >
+            <X size={24} />
+          </button>
+
+          <img
+            src={product.images[activeIndex]}
+            alt={product.imageAlts[activeIndex]}
+            className="max-w-[90vw] max-h-[90vh] object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
+    </>
   );
 }
 
+// ─── Grid layout (multiple products) ────────────────────────────────────────
+
+function ProductGrid({ products }: { products: MerchProduct[] }) {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {products.map((product) => (
+        <a
+          key={product.id}
+          href={product.productUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Ir a la tienda para comprar ${product.title}`}
+          className="group flex flex-col gap-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
+        >
+          <div
+            className="w-full bg-black overflow-hidden"
+            style={{ aspectRatio: "1 / 1" }}
+          >
+            <img
+              src={product.images[0]}
+              alt={product.imageAlts[0]}
+              className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
+            />
+          </div>
+          <div className="flex items-start justify-between">
+            <div>
+              <p
+                className="text-[#3d3d3d] text-xs tracking-[0.25em] uppercase mb-1"
+                style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500 }}
+              >
+                {product.category}
+              </p>
+              <p
+                className="text-black text-sm tracking-[0.1em] uppercase"
+                style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 700 }}
+              >
+                {product.title}
+              </p>
+            </div>
+            <ArrowUpRight
+              size={16}
+              className="text-black/20 group-hover:text-black transition-colors mt-0.5"
+            />
+          </div>
+        </a>
+      ))}
+    </div>
+  );
+}
+
+// ─── Section ─────────────────────────────────────────────────────────────────
+
 export function MerchSection() {
+  const isSingle = merchProducts.length === 1;
+
   return (
     <section
       id="merch"
@@ -113,94 +313,22 @@ export function MerchSection() {
       style={{ fontFamily: "'Space Grotesk', sans-serif" }}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        {/* Header with asymmetric layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-          <div>
-            <SectionHeader label="Merch" title="La colección" />
-          </div>
-          <div className="flex items-end pb-4">
-            <div>
-              <p
-                className="text-[#3d3d3d] mb-6 max-w-xs"
-                style={{ fontSize: "1rem", lineHeight: 1.7 }}
-              >
-                Piezas del mundo Borondo. Cada producto, disponible en la tienda oficial.
-              </p>
-              <a
-                href={SHOPIFY_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 border border-black px-6 py-3 text-base tracking-widest uppercase hover:bg-black hover:text-white transition-colors"
-                style={{ fontWeight: 600 }}
-              >
-                Ir a la Tienda
-                <ArrowUpRight size={12} />
-              </a>
-            </div>
-          </div>
-        </div>
+        <SectionHeader label="Merch" title="La colección" />
 
-        {/* Editorial artist banner + product grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8 items-end mb-12">
-
-          {/* Large editorial image — artist walking — 2 cols */}
-          <div className="lg:col-span-2">
-            <a
-              href={SHOPIFY_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group block relative overflow-hidden"
-              style={{ aspectRatio: "3/4" }}
-              aria-label="Ver colección en la tienda"
+        {isSingle ? (
+          <FeatureProduct product={merchProducts[0]} />
+        ) : (
+          <>
+            <ProductGrid products={merchProducts} />
+            <div className="mt-12 h-px bg-black/10" />
+            <p
+              className="mt-6 text-black/30 text-xs tracking-wider"
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
             >
-              <img
-                src={artistWalking}
-                alt="Beéle — Borondo Merch"
-                className="w-full h-full object-cover object-center transition-all duration-700 group-hover:scale-[1.02]"
-              />
-              {/* Editorial text overlay */}
-              <div className="absolute inset-0 flex flex-col justify-end p-6">
-                <div className="bg-black/0 group-hover:bg-black/30 transition-colors duration-300 absolute inset-0" />
-                <div className="relative z-10">
-                  <p
-                    className="text-white/0 group-hover:text-white/80 transition-all duration-300 text-base tracking-widest uppercase mb-1"
-                    style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500 }}
-                  >
-                    Beéle · Borondo
-                  </p>
-                  <p
-                    className="text-white/0 group-hover:text-white transition-all duration-300 flex items-center gap-2 text-base tracking-widest uppercase"
-                    style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}
-                  >
-                    Ver Colección
-                    <ArrowUpRight size={10} />
-                  </p>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          {/* Product cards — 3 cols */}
-          <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-6 lg:items-end">
-            {PRODUCTS.map((product, i) => (
-              <div
-                key={product.id}
-                className={i === 1 ? "sm:mt-10" : i === 2 ? "sm:-mt-4" : ""}
-              >
-                <MerchCard product={product} />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Disclaimer */}
-        <div className="h-px bg-black/10 mb-6" />
-        <p
-          className="text-black/30 text-base tracking-wider"
-          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-        >
-          La tienda oficial de Borondo es operada por una plataforma externa. Serás redirigido al momento de hacer clic.
-        </p>
+              La tienda oficial de Beéle es operada por una plataforma externa. Serás redirigido al hacer clic.
+            </p>
+          </>
+        )}
       </div>
     </section>
   );

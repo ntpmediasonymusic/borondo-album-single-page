@@ -2,122 +2,83 @@ import { Download } from "lucide-react";
 import { SectionHeader } from "./SectionLabel";
 import albumCover from "../../imports/Beele-borondo-album-cover.jpg";
 import gatefold from "../../imports/GATEFOLD_01.jpg";
+import stickerBorondo from "../../imports/stickers/beeleStickerBorondo.png";
+import stickerColeto from "../../imports/stickers/beeleStickerColeto.png";
+import stickerBomboclat from "../../imports/stickers/beeleStickerBomboclat.png";
+import stickerLaPlena from "../../imports/stickers/beeleStickerLaPlena.png";
+import stickerVisaje from "../../imports/stickers/beeleStickerVisaje.png";
+import stickerLogo from "../../imports/stickers/beeleStickerLogo.png";
 
-interface StickerProps {
-  shape: "circle" | "rounded" | "diamond" | "tag";
-  label: string;
-  sub?: string;
-  rotate?: number;
-  inverted?: boolean;
-}
-
-function Sticker({ shape, label, sub, rotate = 0, inverted = false }: StickerProps) {
-  const base =
-    "relative flex flex-col items-center justify-center select-none cursor-default transition-transform duration-300 hover:scale-105";
-
-  const bg = inverted ? "bg-white" : "bg-black";
-  const fg = inverted ? "text-black" : "text-white";
-  const border = inverted ? "border-2 border-black" : "";
-
-  const labelStyle = {
-    fontFamily: "'Raleway', sans-serif",
-    fontWeight: 800,
-    letterSpacing: "0.1em",
-    textTransform: "uppercase" as const,
-    lineHeight: 1.1,
-  };
-  const subStyle = {
-    fontFamily: "'Space Grotesk', sans-serif",
-    fontSize: "0.45rem",
-    letterSpacing: "0.2em",
-    textTransform: "uppercase" as const,
-  };
-
-  if (shape === "circle") {
-    return (
-      <div
-        className={`${base} ${bg} ${border} rounded-full`}
-        style={{ width: 108, height: 108, transform: `rotate(${rotate}deg)` }}
-      >
-        <span className={`${fg} text-center px-3`} style={{ ...labelStyle, fontSize: "0.9rem" }}>
-          {label}
-        </span>
-        {sub && (
-          <span className={`${fg} opacity-50 text-center mt-1`} style={subStyle}>
-            {sub}
-          </span>
-        )}
-      </div>
-    );
-  }
-
-  if (shape === "rounded") {
-    return (
-      <div
-        className={`${base} ${bg} ${border} px-5 py-4`}
-        style={{ borderRadius: 10, transform: `rotate(${rotate}deg)`, minWidth: 96 }}
-      >
-        <span className={`${fg} text-center`} style={{ ...labelStyle, fontSize: "1rem" }}>
-          {label}
-        </span>
-        {sub && (
-          <span className={`${fg} opacity-50 text-center mt-1`} style={subStyle}>
-            {sub}
-          </span>
-        )}
-      </div>
-    );
-  }
-
-  if (shape === "diamond") {
-    return (
-      <div className="relative flex items-center justify-center" style={{ width: 104, height: 104 }}>
-        <div
-          className={`absolute inset-0 ${bg} ${border}`}
-          style={{ transform: `rotate(45deg) scale(0.7)`, borderRadius: 4 }}
-        />
-        <span className={`relative z-10 ${fg}`} style={{ ...labelStyle, fontSize: "1rem" }}>
-          {label}
-        </span>
-      </div>
-    );
-  }
-
-  // tag
-  return (
-    <div
-      className={`${base} ${bg} ${border} px-6 py-3 relative`}
-      style={{ transform: `rotate(${rotate}deg)`, minWidth: 104, borderRadius: "18px 18px 18px 0px" }}
-    >
-      <span className={`${fg}`} style={{ ...labelStyle, fontSize: "0.9rem" }}>
-        {label}
-      </span>
-      {sub && (
-        <span className={`${fg} opacity-50 mt-1`} style={subStyle}>
-          {sub}
-        </span>
-      )}
-    </div>
-  );
-}
-
-const stickers: StickerProps[] = [
-  { shape: "circle",  label: "BORONDO",   sub: "BEÉLE · 2025",    rotate: -4, inverted: false },
-  { shape: "rounded", label: "ANHÉLAME",  sub: "Track 01",         rotate:  3, inverted: true  },
-  { shape: "circle",  label: "B",         sub: "BEÉLE",            rotate:  0, inverted: true  },
-  { shape: "tag",     label: "QUÉDATE",                            rotate: -2, inverted: false },
-  { shape: "rounded", label: "BYE",       sub: "Track 21",         rotate:  5, inverted: false },
-  { shape: "diamond", label: "BDO",                                rotate:  0, inverted: true  },
-  { shape: "circle",  label: "SOBELOVE",  sub: "Track 18",         rotate:  2, inverted: false },
-  { shape: "tag",     label: "YA Q",      sub: "Track 22",         rotate: -3, inverted: true  },
-  { shape: "rounded", label: "ARENA",     sub: "ft. C. Morrison",  rotate:  1, inverted: false },
+const stickers = [
+  {
+    id: "borondo-01",
+    label: "Bomboclat",
+    src: stickerBomboclat,
+    downloadUrl: "/stickers/borondo-01.webp",
+    downloadName: "borondo-sticker-01-bomboclat.webp",
+    alt: "Sticker Bomboclat de Borondo",
+    rotate: -2,
+    duration: 3.0,
+    delay: 0.0,
+  },
+  {
+    id: "borondo-02",
+    label: "Borondo",
+    src: stickerBorondo,
+    downloadUrl: "/stickers/borondo-02.webp",
+    downloadName: "borondo-sticker-02-borondo.webp",
+    alt: "Sticker Borondo",
+    rotate: -4,
+    duration: 3.4,
+    delay: 0.5,
+  },
+  {
+    id: "borondo-03",
+    label: "Coleto",
+    src: stickerColeto,
+    downloadUrl: "/stickers/borondo-03.webp",
+    downloadName: "borondo-sticker-03-coleto.webp",
+    alt: "Sticker Coleto de Borondo",
+    rotate: 3,
+    duration: 2.8,
+    delay: 1.0,
+  },
+  {
+    id: "borondo-04",
+    label: "La Plena",
+    src: stickerLaPlena,
+    downloadUrl: "/stickers/borondo-04.webp",
+    downloadName: "borondo-sticker-04-la-plena.webp",
+    alt: "Sticker La Plena de Borondo",
+    rotate: 2,
+    duration: 3.2,
+    delay: 0.3,
+  },
+  {
+    id: "borondo-05",
+    label: "Logo",
+    src: stickerLogo,
+    downloadUrl: "/stickers/borondo-05.webp",
+    downloadName: "borondo-sticker-05-logo.webp",
+    alt: "Sticker logo de Borondo",
+    rotate: 1,
+    duration: 2.6,
+    delay: 0.8,
+  },
+  {
+    id: "borondo-06",
+    label: "Visaje",
+    src: stickerVisaje,
+    downloadUrl: "/stickers/borondo-06.webp",
+    downloadName: "borondo-sticker-06-visaje.webp",
+    alt: "Sticker Visaje de Borondo",
+    rotate: -3,
+    duration: 3.1,
+    delay: 1.4,
+  },
 ];
 
 export function WhatsAppStickers() {
-  const handleDownload = () => {
-    alert("Pack de stickers próximamente disponible.");
-  };
-
   return (
     <section
       id="stickers"
@@ -132,9 +93,28 @@ export function WhatsAppStickers() {
 
           {/* ── Left: sticker grid + CTA ── */}
           <div>
-            <div className="flex flex-wrap gap-4 items-center">
+            <div className="grid grid-cols-3 gap-4">
               {stickers.map((s) => (
-                <Sticker key={s.label} {...s} />
+                <a
+                  key={s.id}
+                  href={s.downloadUrl}
+                  download={s.downloadName}
+                  aria-label={`Descargar ${s.alt}`}
+                  className="flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/60 focus-visible:outline-offset-4 rounded-sm cursor-pointer"
+                  style={{ transform: `rotate(${s.rotate}deg)` }}
+                >
+                  <img
+                    src={s.src}
+                    alt={s.alt}
+                    loading="lazy"
+                    decoding="async"
+                    className="sticker-img w-full h-auto max-w-[120px] drop-shadow-lg"
+                    style={{
+                      "--levitate-duration": `${s.duration}s`,
+                      "--levitate-delay": `${s.delay}s`,
+                    } as React.CSSProperties}
+                  />
+                </a>
               ))}
             </div>
 
@@ -144,13 +124,15 @@ export function WhatsAppStickers() {
               className="text-white/70 mb-7 max-w-sm"
               style={{ fontSize: "1rem", lineHeight: 1.75 }}
             >
-              9 stickers del mundo Borondo para tus conversaciones.
-              Descarga el pack y comparte lo que llevas adentro.
+              6 stickers del mundo Borondo para tus conversaciones.
+              Descarga el pack y comparte lo que llevas dentro.
             </p>
 
-            <button
-              onClick={handleDownload}
-              className="flex items-center gap-3 bg-white text-black px-8 py-4 hover:bg-white/85 transition-colors group"
+            <a
+              href="/downloads/borondo-whatsapp-stickers.zip"
+              download="borondo-whatsapp-stickers.zip"
+              aria-label="Descargar pack completo de stickers Borondo"
+              className="inline-flex items-center gap-3 bg-white text-black px-8 py-4 hover:bg-white/85 transition-colors group"
             >
               <Download
                 size={14}
@@ -162,7 +144,7 @@ export function WhatsAppStickers() {
               >
                 Descargar Pack
               </span>
-            </button>
+            </a>
 
             <p
               className="text-white/65 mt-3"
@@ -170,11 +152,17 @@ export function WhatsAppStickers() {
             >
               Compatible con WhatsApp · iOS · Android
             </p>
+            <p
+              className="text-white/35 mt-2 max-w-xs"
+              style={{ fontSize: "0.78rem", lineHeight: 1.6 }}
+            >
+              Descarga los stickers desde tu celular para guardarlos y usarlos en tus conversaciones.
+            </p>
           </div>
 
           {/* ── Right: Gatefold editorial image ── */}
           <div className="relative">
-            {/* Gatefold photo — tall crop, grayscale */}
+            {/* Gatefold photo — tall crop */}
             <div
               className="relative overflow-hidden"
               style={{ aspectRatio: "4/5" }}

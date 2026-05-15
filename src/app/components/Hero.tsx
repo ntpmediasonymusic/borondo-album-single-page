@@ -126,6 +126,20 @@ export function Hero() {
           >
             Borondo
           </h1>
+
+          {/* Subtitle */}
+          <span
+            className="text-white mt-4 block"
+            style={{
+              fontFamily: "'Space Grotesk', sans-serif",
+              fontSize: "clamp(1rem, 2.5vw, 2rem)",
+              letterSpacing: "0.28em",
+              textTransform: "uppercase",
+              fontWeight: 500,
+            }}
+          >
+            1er Aniversario
+          </span>
         </div>
 
         {/* ── Bottom bar ── */}
@@ -183,23 +197,6 @@ export function Hero() {
               </div>
             </div>
 
-            {/* Right: scroll indicator */}
-            <div className="flex items-center gap-3 flex-shrink-0">
-              <div className="h-px w-8 bg-white/15" />
-              <span
-                className="text-white/65"
-                style={{
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  fontSize: "1rem",
-                  letterSpacing: "0.3em",
-                  textTransform: "uppercase",
-                  fontWeight: 500,
-                }}
-              >
-                Scroll
-              </span>
-              <div className="w-px h-7 bg-white/15 animate-pulse" />
-            </div>
           </div>
         </div>
       </div>

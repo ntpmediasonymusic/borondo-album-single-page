@@ -1,5 +1,20 @@
 @custom-variant dark (&:is(.dark *));
 
+@keyframes levitate {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+.sticker-img {
+  animation: levitate var(--levitate-duration, 3s) ease-in-out var(--levitate-delay, 0s) infinite;
+  will-change: transform;
+  transition: scale 0.3s ease;
+}
+
+.sticker-img:hover {
+  scale: 1.15;
+}
+
 :root {
   --font-size: 16px;
   --background: #ffffff;
