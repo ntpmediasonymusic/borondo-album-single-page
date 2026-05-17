@@ -94,6 +94,9 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
             {/* Desktop nav links */}
             <div className={`hidden md:flex items-center gap-8 text-base tracking-widest uppercase ${textColor}`}
               style={{ fontWeight: 500 }}>
+              <button onClick={() => scrollTo("merch")} className="hover:opacity-50 transition-opacity cursor-pointer uppercase">
+                Merch
+              </button>
               <button onClick={() => scrollTo("tracks")} className="hover:opacity-50 transition-opacity cursor-pointer uppercase">
                 Tracks
               </button>
@@ -102,9 +105,6 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
               </button>
               <button onClick={() => scrollTo("stickers")} className="hover:opacity-50 transition-opacity cursor-pointer uppercase">
                 Stickers
-              </button>
-              <button onClick={() => scrollTo("merch")} className="hover:opacity-50 transition-opacity uppercase">
-                Merch
               </button>
               <Link
                 to="/cartas-a-beele"
@@ -124,7 +124,7 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
 
             {/* Mobile hamburger */}
             <button
-              className={`md:hidden ${textColor} p-1`}
+              className={`md:hidden ${textColor} p-1 cursor-pointer`}
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Abrir menú"
             >
@@ -142,15 +142,15 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
         >
           <div className="flex flex-col gap-8 w-full">
             {[
+              { label: "Merch", id: "merch" },
               { label: "Tracks", id: "tracks" },
               { label: "Videos", id: "videos" },
               { label: "Stickers", id: "stickers" },
-              { label: "Merch", id: "merch" },
             ].map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollTo(item.id)}
-                className="text-left text-white tracking-widest uppercase text-base border-b border-white/10 pb-6 hover:opacity-50 transition-opacity"
+                className="text-left text-white tracking-widest uppercase text-base border-b border-white/10 pb-6 hover:opacity-50 transition-opacity cursor-pointer"
                 style={{ fontWeight: 500 }}
               >
                 {item.label}
@@ -159,7 +159,7 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
             <Link
               to="/cartas-a-beele"
               onClick={() => setMenuOpen(false)}
-              className="text-left text-white/75 tracking-widest uppercase text-base border-b border-white/10 pb-6 hover:opacity-50 transition-opacity"
+              className="text-left text-white/75 tracking-widest uppercase text-base border-b border-white/10 pb-6 hover:opacity-50 transition-opacity cursor-pointer"
               style={{ fontWeight: 500 }}
             >
               Cartas a Beéle
@@ -167,7 +167,7 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
             {/* Newsletter CTA */}
             <button
               onClick={() => scrollTo("registro")}
-              className="text-left bg-white text-black tracking-widest uppercase text-base px-5 py-3 inline-block hover:opacity-80 transition-opacity w-auto"
+              className="text-left bg-white text-black tracking-widest uppercase text-base px-5 py-3 inline-block hover:opacity-80 transition-opacity w-auto cursor-pointer"
               style={{ fontWeight: 600 }}
             >
               Newsletter

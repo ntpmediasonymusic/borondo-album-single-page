@@ -1,7 +1,16 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { ArrowUpRight, X, ZoomIn } from "lucide-react";
+import { ArrowUpRight, X, ZoomIn, Loader2 } from "lucide-react";
 import { SectionHeader } from "./SectionLabel";
 import { RevealOnScroll } from "./RevealOnScroll";
+import {
+  loadShopifySdk,
+  SHOPIFY_DOMAIN,
+  SHOPIFY_TOKEN,
+  SHOPIFY_PRODUCT_ID,
+  SHOPIFY_PRODUCT_OPTIONS,
+  FALLBACK_PRODUCT_URL,
+  type ShopifyProductComponent,
+} from "@/app/utils/shopifyBuyButton";
 import vinyl1 from "../../imports/merch/borondo-vinyl/borondo-vinyl-1.jpg";
 import vinyl2 from "../../imports/merch/borondo-vinyl/borondo-vinyl-2.jpg";
 import vinyl3 from "../../imports/merch/borondo-vinyl/borondo-vinyl-3.jpg";
@@ -48,6 +57,87 @@ function FeatureProduct({ product }: { product: MerchProduct }) {
   const userInteracted = useRef(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  // ── Shopify Buy Button ──────────────────────────────────────────────────────
+  const [buying, setBuying] = useState(false);
+  const shopifyComponentRef = useRef<ShopifyProductComponent | null>(null);
+  const shopifyReadyRef = useRef(false);
+  const hiddenNodeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function initShopify() {
+      try {
+        console.log("[Shopify] Loading SDK...");
+        await loadShopifySdk();
+        if (cancelled) return;
+
+        console.log("[Shopify] SDK ready ✓ — building client...");
+        const client = window.ShopifyBuy.buildClient({
+          domain: SHOPIFY_DOMAIN,
+          storefrontAccessToken: SHOPIFY_TOKEN,
+        });
+
+        console.log("[Shopify] Client built ✓ — waiting for UI...");
+        const ui = await window.ShopifyBuy.UI.onReady(client);
+        if (cancelled) return;
+
+        console.log("[Shopify] UI ready ✓ — creating product component...");
+        const component = await ui.createComponent("product", {
+          id: SHOPIFY_PRODUCT_ID,
+          node: hiddenNodeRef.current,
+          moneyFormat: "%24%7B%7Bamount%7D%7D",
+          options: SHOPIFY_PRODUCT_OPTIONS,
+        });
+
+        if (cancelled) return;
+        shopifyComponentRef.current = component;
+        shopifyReadyRef.current = true;
+        console.log("[Shopify] Component ready ✓ — addToCart() is available.");
+      } catch (err) {
+        if (!cancelled) {
+          console.warn("[Shopify] Init failed — fallback will be used:", err);
+        }
+      }
+    }
+
+    initShopify();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const redirectToFallback = useCallback((reason: string, error?: unknown) => {
+    console.warn("[Shopify] Fallback triggered:", reason, error ?? "");
+    window.open(FALLBACK_PRODUCT_URL, "_blank", "noopener,noreferrer");
+  }, []);
+
+  // addToCart() is synchronous in return value but fires async cart internals.
+  // We never await it — the cart drawer opens on its own.
+  const handleBuyClick = useCallback(() => {
+    if (buying) return;
+
+    const component = shopifyComponentRef.current;
+    if (!shopifyReadyRef.current || !component) {
+      redirectToFallback("shopify_not_ready");
+      return;
+    }
+
+    setBuying(true);
+    try {
+      console.log("[Shopify] addToCart() called.");
+      component.addToCart();
+      // Re-enable the button after the cart drawer has had time to open
+      setTimeout(() => setBuying(false), 2000);
+    } catch (error) {
+      console.error("[Shopify] addToCart() threw:", error);
+      setBuying(false);
+      redirectToFallback("add_to_cart_threw", error);
+    }
+  }, [buying, redirectToFallback]);
+
+  // ── Image carousel ─────────────────────────────────────────────────────────
+
   const selectImage = useCallback((index: number, manual = false) => {
     setActiveIndex(index);
     if (manual) {
@@ -81,7 +171,9 @@ function FeatureProduct({ product }: { product: MerchProduct }) {
   // Lock body scroll when lightbox is open
   useEffect(() => {
     document.body.style.overflow = lightboxOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [lightboxOpen]);
 
   return (
@@ -120,7 +212,7 @@ function FeatureProduct({ product }: { product: MerchProduct }) {
                 onClick={() => selectImage(i, true)}
                 aria-pressed={activeIndex === i ? "true" : "false"}
                 aria-label={product.imageAlts[i]}
-                className={`relative aspect-square overflow-hidden bg-black focus:outline-none focus-visible:ring-2 focus-visible:ring-black transition-opacity duration-200 ${
+                className={`relative aspect-square overflow-hidden bg-black focus:outline-none focus-visible:ring-2 focus-visible:ring-black transition-opacity duration-200 cursor-pointer ${
                   activeIndex === i
                     ? "ring-2 ring-black opacity-100"
                     : "opacity-50 hover:opacity-80"
@@ -189,7 +281,7 @@ function FeatureProduct({ product }: { product: MerchProduct }) {
             <button
               type="button"
               onClick={() => setExpanded((v) => !v)}
-              className="mt-3 text-sm tracking-widest uppercase underline underline-offset-4 text-black/50 hover:text-black transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
+              className="mt-3 text-sm tracking-widest uppercase underline underline-offset-4 text-black/50 hover:text-black transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black cursor-pointer"
               style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}
             >
               {expanded ? "Ver menos" : "Ver más"}
@@ -199,18 +291,29 @@ function FeatureProduct({ product }: { product: MerchProduct }) {
           {/* Divider */}
           <div className="h-px bg-black/10 w-full" />
 
-          {/* CTA */}
-          <a
-            href={product.productUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Ir a la tienda oficial para comprar ${product.title}`}
-            className="flex items-center justify-center gap-3 bg-black text-white px-8 py-4 text-sm tracking-[0.2em] uppercase hover:bg-black/80 active:bg-black/90 transition-colors w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
+          {/* CTA — same visual as original <a>; triggers Shopify cart or fallback */}
+          <button
+            type="button"
+            disabled={buying}
+            onClick={handleBuyClick}
+            aria-label={
+              buying ? "Cargando..." : `Agregar ${product.title} al carrito`
+            }
+            className="flex items-center justify-center gap-3 bg-black text-white px-8 py-4 text-sm tracking-[0.2em] uppercase hover:bg-black/80 active:bg-black/90 transition-colors w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
             style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700 }}
           >
-            IR A LA TIENDA
-            <ArrowUpRight size={16} />
-          </a>
+            {buying ? (
+              <>
+                <Loader2 size={16} className="animate-spin" />
+                <span>CARGANDO...</span>
+              </>
+            ) : (
+              <>
+                IR A LA TIENDA
+                <ArrowUpRight size={16} />
+              </>
+            )}
+          </button>
 
           {/* Disclaimer */}
           <p
@@ -221,6 +324,23 @@ function FeatureProduct({ product }: { product: MerchProduct }) {
           </p>
         </RevealOnScroll>
       </div>
+
+      {/* Hidden Shopify product container — positioned off-screen so the SDK
+          can render its iframe without affecting the visible layout.
+          Do NOT use display:none — it prevents the iframe from initializing. */}
+      <div
+        ref={hiddenNodeRef}
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          left: "-9999px",
+          width: "300px",
+          height: "100px",
+          overflow: "hidden",
+          opacity: 0,
+          pointerEvents: "none",
+        }}
+      />
 
       {/* ── Lightbox modal ── */}
       {lightboxOpen && (
@@ -315,7 +435,7 @@ export function MerchSection() {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <RevealOnScroll animation="fade-up">
-          <SectionHeader label="Merch" title="La colección" />
+          <SectionHeader label="Merch" title="El Vinilo" />
         </RevealOnScroll>
 
         {isSingle ? (

@@ -166,17 +166,17 @@ export function Footer() {
           {/* Column 2 — Navigation links */}
           <div className="flex flex-row flex-wrap justify-between">
             {[
+              { label: "Merch", id: "merch" },
               { label: "Tracks", id: "tracks" },
               { label: "Videos", id: "videos" },
               { label: "Stickers", id: "stickers" },
-              { label: "Merch", id: "merch" },
               // { label: "Comunidad", id: "registro" },
             ].map((item) => (
               <button
                 key={item.id}
                 type="button"
                 onClick={() => scrollTo(item.id)}
-                className="text-left text-[#3d3d3d] hover:text-black transition-colors text-base tracking-widest uppercase"
+                className="text-left text-[#3d3d3d] hover:text-black transition-colors text-base tracking-widest uppercase cursor-pointer"
                 style={{ fontWeight: 500 }}
               >
                 {item.label}

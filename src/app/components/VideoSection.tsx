@@ -101,7 +101,7 @@ function VideoCard({ video, onOpen, featured = false }: CardProps) {
       type="button"
       className={[
         "group relative block w-full overflow-hidden bg-black text-left",
-        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white cursor-pointer",
         !clickable && "cursor-default",
       ]
         .filter(Boolean)

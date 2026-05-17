@@ -387,7 +387,7 @@ function YoutubeMusicIcon({ size = 13 }: { size?: number }) {
 
 function DeezerIcon({ size = 13 }: { size?: number }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 640 640">
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="currentColor" viewBox="0 0 640 640">
       <path d="M78.8 165.1C70.6 165.1 64 191.6 64 224.3C64 257 70.6 283.5 78.8 283.5C87 283.5 93.6 257 93.6 224.3C93.6 191.6 87 165.1 78.8 165.1zM512.7 104.9C505 104.9 498.2 122 493.3 149C485.6 102.3 473.1 72 459.1 72C442.3 72 428 114.9 421.1 177.4C414.5 132 404.3 103.2 392.8 103.2C376.7 103.2 363.2 160.1 358.1 239.4C348.7 198.6 334.9 173.1 319.8 173.1C304.7 173.1 291 198.6 281.5 239.4C276.4 160.1 262.9 103.2 246.8 103.2C235.3 103.2 225.1 132 218.5 177.4C211.9 114.9 197.3 72 180.7 72C166.7 72 154.2 102.4 146.5 149C141.7 122 134.8 104.9 127.1 104.9C112.8 104.9 101.1 164.1 101.1 237C101.1 309.9 113 369.2 127.3 369.2C133.2 369.2 138.8 359.3 143.1 342.4C150 404.1 164.3 446.5 181.1 446.5C194.1 446.5 205.6 421 213.2 380.9C218.6 457.2 231.8 511.3 247.4 511.3C257.1 511.3 266 489.9 272.7 454.9C280.6 527.1 299 577.6 320.4 577.6C341.8 577.6 359.9 527.1 368.1 454.9C374.7 489.9 383.7 511.3 393.4 511.3C409 511.3 422.2 457.2 427.6 380.9C435.3 421 447 446.5 459.7 446.5C476.3 446.5 490.6 404.2 497.7 342.4C502 359.2 507.4 369.2 513.5 369.2C527.8 369.2 539.5 310 539.5 237.1C539.5 164.2 527 104.9 512.7 104.9zM561.2 165.1C553 165.1 546.4 191.6 546.4 224.3C546.4 257 553 283.5 561.2 283.5C569.4 283.5 576 257 576 224.3C576 191.6 569.4 165.1 561.2 165.1z" />
     </svg>
   );
@@ -423,8 +423,6 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
     setIsClamped(el.scrollHeight > el.clientHeight);
   }, [isExpanded]);
 
-  const isAlbumCover = track.image === albumCover;
-
   const handleClick = (e: React.MouseEvent) => {
     if (isSelected) return;
     if ((e.target as HTMLElement).closest("a, button")) return;
@@ -436,7 +434,7 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
       onClick={handleClick}
       className={`flex-none w-[72vw] sm:w-[290px] lg:w-[320px] mr-3 lg:mr-5 transition-opacity duration-[400ms] flex flex-col select-none ${isSelected ? "opacity-100" : "opacity-40 cursor-pointer"}`}
     >
-      <div className="border border-black/10 bg-white group flex-1 flex flex-col">
+      <div className="border border-white/10 bg-white/[0.04] group flex-1 flex flex-col">
         {/* Image */}
         <div className="relative overflow-hidden" style={{ aspectRatio: "1/1" }}>
           <img
@@ -457,9 +455,7 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
               fontWeight: 900,
               lineHeight: 1,
               color: "transparent",
-              WebkitTextStroke: isAlbumCover
-                ? "1px rgba(0,0,0,0.3)"
-                : "1px rgba(255,255,255,0.22)",
+              WebkitTextStroke: "1px rgba(255,255,255,0.22)",
               letterSpacing: "0.04em",
             }}
             aria-hidden="true"
@@ -494,7 +490,7 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
           {/* Number + bonus tag */}
           <div className="flex items-center justify-between mb-2">
             <span
-              className="text-black/15"
+              className="text-white/15"
               style={{
                 fontFamily: "'Raleway', sans-serif",
                 fontSize: "2rem",
@@ -507,7 +503,7 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
             </span>
             {track.bonus && (
               <span
-                className="text-[#3d3d3d] text-base tracking-[0.2em] uppercase border border-black/20 px-2 py-0.5"
+                className="text-white/65 text-base tracking-[0.2em] uppercase border border-white/20 px-2 py-0.5"
                 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500 }}
               >
                 Bonus
@@ -517,7 +513,7 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
 
           {/* Title */}
           <h3
-            className="text-black leading-none mb-1"
+            className="text-white leading-none mb-1"
             style={{
               fontFamily: "'Raleway', sans-serif",
               fontSize: "clamp(1.1rem, 2.2vw, 1.35rem)",
@@ -532,7 +528,7 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
           {/* Feature */}
           {track.ft && (
             <p
-              className="text-[#3d3d3d] text-base tracking-[0.15em] uppercase mb-2"
+              className="text-white/65 text-base tracking-[0.15em] uppercase mb-2"
               style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500 }}
             >
               ft. {track.ft}
@@ -540,12 +536,12 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
           )}
 
           {/* Divider */}
-          <div className="h-px bg-black/8 my-3" />
+          <div className="h-px bg-white/8 my-3" />
 
           {/* Artist note */}
           <blockquote
             ref={noteRef}
-            className={`text-[#3d3d3d]${!isExpanded ? " line-clamp-2" : ""}`}
+            className={`text-white/75${!isExpanded ? " line-clamp-2" : ""}`}
             style={{
               fontFamily: "'Space Grotesk', sans-serif",
               fontStyle: "italic",
@@ -560,7 +556,7 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); onToggleExpand(); }}
-              className="mt-1.5 text-sm text-black/40 hover:text-black transition-colors tracking-wide"
+              className="mt-1.5 text-sm text-white/40 hover:text-white/70 transition-colors tracking-wide cursor-pointer"
               style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500 }}
             >
               {isExpanded ? "Ver menos" : "Ver más"}
@@ -569,37 +565,37 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
 
           {/* Platform links */}
           <div className="mt-auto pt-3">
-            <div className="h-px bg-black/8 mb-3" />
+            <div className="h-px bg-white/8 mb-3" />
             <div className="flex items-center justify-between">
               <span
-                className="text-base tracking-[0.2em] uppercase text-[#3d3d3d]"
+                className="text-base tracking-[0.2em] uppercase text-white/65"
                 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}
               >
                 Escuchar
               </span>
               <div className="flex items-center gap-3" onClick={(e) => e.stopPropagation()}>
                 {track.spotifyUrl && (
-                  <a href={track.spotifyUrl} target="_blank" rel="noopener noreferrer" className="text-[#3d3d3d] hover:text-black transition-colors" aria-label="Escuchar en Spotify">
+                  <a href={track.spotifyUrl} target="_blank" rel="noopener noreferrer" className="text-white/65 hover:text-white transition-colors" aria-label="Escuchar en Spotify">
                     <SpotifyIcon size={16} />
                   </a>
                 )}
                 {track.appleMusicUrl && (
-                  <a href={track.appleMusicUrl} target="_blank" rel="noopener noreferrer" className="text-[#3d3d3d] hover:text-black transition-colors" aria-label="Escuchar en Apple Music">
+                  <a href={track.appleMusicUrl} target="_blank" rel="noopener noreferrer" className="text-white/65 hover:text-white transition-colors" aria-label="Escuchar en Apple Music">
                     <AppleMusicIcon size={16} />
                   </a>
                 )}
                 {track.youtubeMusicUrl && (
-                  <a href={track.youtubeMusicUrl} target="_blank" rel="noopener noreferrer" className="text-[#3d3d3d] hover:text-black transition-colors" aria-label="Escuchar en YouTube Music">
+                  <a href={track.youtubeMusicUrl} target="_blank" rel="noopener noreferrer" className="text-white/65 hover:text-white transition-colors" aria-label="Escuchar en YouTube Music">
                     <YoutubeMusicIcon size={16} />
                   </a>
                 )}
                 {track.amazonMusicUrl && (
-                  <a href={track.amazonMusicUrl} target="_blank" rel="noopener noreferrer" className="text-[#3d3d3d] hover:text-black transition-colors" aria-label="Escuchar en Amazon Music">
+                  <a href={track.amazonMusicUrl} target="_blank" rel="noopener noreferrer" className="text-white/65 hover:text-white transition-colors" aria-label="Escuchar en Amazon Music">
                     <AmazonMusicIcon size={16} />
                   </a>
                 )}
                 {track.deezerUrl && (
-                  <a href={track.deezerUrl} target="_blank" rel="noopener noreferrer" className="text-[#3d3d3d] hover:text-black transition-colors" aria-label="Escuchar en Deezer">
+                  <a href={track.deezerUrl} target="_blank" rel="noopener noreferrer" className="text-white/65 hover:text-white transition-colors" aria-label="Escuchar en Deezer">
                     <DeezerIcon size={16} />
                   </a>
                 )}
@@ -646,17 +642,17 @@ export function TrackByTrack() {
   return (
     <section
       id="tracks"
-      className="bg-white py-12 lg:py-20 overflow-hidden"
+      className="bg-black py-12 lg:py-20 overflow-hidden"
       style={{ fontFamily: "'Space Grotesk', sans-serif" }}
     >
       {/* Section header */}
       <div className="max-w-7xl mx-auto px-6 lg:px-10 mb-6">
         <RevealOnScroll animation="fade-up">
-          <SectionHeader label="Track by Track" title="Explora el album" />
+          <SectionHeader label="Track by Track" title="Explora el album" light />
         </RevealOnScroll>
         <RevealOnScroll animation="fade-up" delay={100}>
           <p
-            className="text-[#3d3d3d] text-base"
+            className="text-white/65 text-base"
             style={{ fontFamily: "'Space Grotesk', sans-serif" }}
           >
             {TRACKS.length} canciones · Desliza para explorar
@@ -666,9 +662,9 @@ export function TrackByTrack() {
 
       {/* Progress bar */}
       <RevealOnScroll animation="fade-in" delay={150} className="max-w-7xl mx-auto px-6 lg:px-10 mb-5">
-        <div className="h-px bg-black/8 relative">
+        <div className="h-px bg-white/8 relative">
           <div
-            className="absolute top-0 left-0 h-full bg-black transition-all duration-300"
+            className="absolute top-0 left-0 h-full bg-white transition-all duration-300"
             style={{ width: `${((selectedIndex + 1) / TRACKS.length) * 100}%` }}
           />
         </div>
@@ -701,7 +697,7 @@ export function TrackByTrack() {
           <button
             type="button"
             onClick={scrollPrev}
-            className="w-9 h-9 border border-black/20 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all"
+            className="w-9 h-9 border border-white/20 flex items-center justify-center hover:border-white hover:bg-white hover:text-black transition-all text-white cursor-pointer"
             aria-label="Cancion anterior"
           >
             <ArrowLeft size={13} />
@@ -709,14 +705,14 @@ export function TrackByTrack() {
 
           <div className="flex items-center gap-1.5 min-w-[4rem] justify-center">
             <span
-              className="text-black tabular-nums"
+              className="text-white tabular-nums"
               style={{ fontFamily: "'Raleway', sans-serif", fontSize: "0.9rem", fontWeight: 700, letterSpacing: "0.08em" }}
             >
               {String(selectedIndex + 1).padStart(2, "0")}
             </span>
-            <span className="text-black/20 text-xs">/</span>
+            <span className="text-white/20 text-xs">/</span>
             <span
-              className="text-black/30 tabular-nums"
+              className="text-white/35 tabular-nums"
               style={{ fontFamily: "'Raleway', sans-serif", fontSize: "0.9rem", fontWeight: 700, letterSpacing: "0.08em" }}
             >
               {String(TRACKS.length).padStart(2, "0")}
@@ -726,7 +722,7 @@ export function TrackByTrack() {
           <button
             type="button"
             onClick={scrollNext}
-            className="w-9 h-9 border border-black/20 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all"
+            className="w-9 h-9 border border-white/20 flex items-center justify-center hover:border-white hover:bg-white hover:text-black transition-all text-white cursor-pointer"
             aria-label="Siguiente cancion"
           >
             <ArrowRight size={13} />
@@ -738,7 +734,7 @@ export function TrackByTrack() {
           href={PLAYLIST_BASE}
           target="_blank"
           rel="noopener noreferrer"
-          className="md:absolute md:left-6 lg:left-10 flex items-center gap-1.5 text-[#3d3d3d] hover:text-black transition-colors text-base tracking-widest uppercase"
+          className="md:absolute md:left-6 lg:left-10 flex items-center gap-1.5 text-white/65 hover:text-white transition-colors text-base tracking-widest uppercase"
           style={{ fontWeight: 500 }}
         >
           Ver playlist

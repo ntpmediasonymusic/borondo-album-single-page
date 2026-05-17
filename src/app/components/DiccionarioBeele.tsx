@@ -14,7 +14,7 @@ interface DictEntry {
   type: string;
   definition: string;
   example: string;
-  url: string;
+  url?: string;
 }
 
 const DICTIONARY: DictEntry[] = [
@@ -53,6 +53,26 @@ const DICTIONARY: DictEntry[] = [
   },
   {
     id: 4,
+    word: "Empakitao",
+    phonetic: "/em · pa · ki · tao/",
+    type: "adj · expr",
+    definition:
+      "Estado de estar completamente metido, envuelto o cargado de una emoción, un mood o una experiencia. Viene de la idea de estar “empaquetado” en algo, pero en clave caribeña suena más a estar activado, montado en el viaje y con todo el sentimiento encima. En el universo BORONDO, estar empakitao es andar lleno de recuerdos, canciones, calle, playa, deseo y nostalgia.",
+    example:
+      '"Ando empakitao en este borondo, con tu nombre sonando en cada esquina de la ciudad."',
+  },
+  {
+    id: 5,
+    word: "La mondá",
+    phonetic: "/la · mon · dá/",
+    type: "sust · expr",
+    definition:
+      "Expresión costeña usada para decir que algo o alguien es demasiado bueno, impresionante, único o difícil de superar. Aunque puede tener un tono vulgar según el contexto, en una canción romántica funciona como un elogio intenso: decirle a alguien que es “la mondá” es decirle que lo es todo, que encanta, que desarma y que no se compara con nadie.",
+    example:
+      '"Tú eres la mondá, por eso aunque me vaya siempre termino volviendo a ti."',
+  },
+  {
+    id: 6,
     word: "La Plena",
     phonetic: "/la · ple · na/",
     type: "sust · loc",
@@ -63,7 +83,17 @@ const DICTIONARY: DictEntry[] = [
     url: "https://www.youtube.com/watch?v=0xoFaiQLB1U&list=PL-WV71xWJQL_qAMtlN04781454eQNuhrE&index=2",
   },
   {
-    id: 5,
+    id: 7,
+    word: "Makia",
+    phonetic: "/ma · kia/",
+    type: "adj · sust",
+    definition:
+      "Forma coloquial para decir que algo está fino, duro, bien hecho o con mucho estilo. Puede usarse para una persona, una vibra, una canción, una pinta o una situación que tiene flow propio y se siente especial. En clave Beéle, “makia” describe eso que no necesita explicarse demasiado porque se siente: una noche, una mirada o un ritmo que llega con clase y calle a la vez.",
+    example:
+      '"La noche estaba makia, tú bailando cerquita y yo perdiendo la calma con cada canción."',
+  },
+  {
+    id: 8,
     word: "Visaje",
     phonetic: "/vi · sa · je/",
     type: "sust · adj",
@@ -117,7 +147,7 @@ function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: 
         isSelected ? "opacity-100" : "opacity-35 cursor-pointer"
       }`}
     >
-      <div className="border border-white/10 bg-white/[0.04] relative overflow-hidden group">
+      <div className="border border-black/10 bg-white relative overflow-hidden group">
         {/* Ghost letter background */}
         <div
           className="absolute top-0 right-0 select-none pointer-events-none leading-none"
@@ -128,7 +158,7 @@ function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: 
             fontSize: "9rem",
             lineHeight: 0.85,
             color: "transparent",
-            WebkitTextStroke: "1px rgba(255,255,255,0.05)",
+            WebkitTextStroke: "1px rgba(0,0,0,0.05)",
             letterSpacing: "-0.02em",
             transform: "translateX(10%)",
           }}
@@ -140,7 +170,7 @@ function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: 
           {/* Entry number + YT link */}
           <div className="flex items-center justify-between mb-5">
             <span
-              className="text-white/15"
+              className="text-black/15"
               style={{
                 fontFamily: "'Raleway', sans-serif",
                 fontWeight: 900,
@@ -151,27 +181,29 @@ function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: 
             >
               {num}
             </span>
-            <a
-              href={entry.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="flex items-center gap-1 text-white/65 hover:text-white/90 transition-colors"
-              aria-label={`Ver "${entry.word}" en YouTube`}
-            >
-              <span
-                className="text-base tracking-[0.15em] uppercase"
-                style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500 }}
+            {entry.url && (
+              <a
+                href={entry.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="flex items-center gap-1 text-[#3d3d3d] hover:text-black transition-colors"
+                aria-label={`Ver "${entry.word}" en YouTube`}
               >
-                <YoutubeMusicIcon size={24} />
-              </span>
-              <ArrowUpRight size={11} />
-            </a>
+                <span
+                  className="text-base tracking-[0.15em] uppercase"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500 }}
+                >
+                  <YoutubeMusicIcon size={24} />
+                </span>
+                <ArrowUpRight size={11} />
+              </a>
+            )}
           </div>
 
           {/* Word */}
           <h3
-            className="text-white leading-none mb-1"
+            className="text-black leading-none mb-1"
             style={{
               fontFamily: "'Raleway', sans-serif",
               fontWeight: 900,
@@ -186,14 +218,14 @@ function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: 
           {/* Phonetic + type */}
           <div className="flex items-center gap-3 mt-1.5 mb-5">
             <span
-              className="text-white/65 text-base tracking-wide"
+              className="text-[#3d3d3d] text-base tracking-wide"
               style={{ fontFamily: "'Space Grotesk', sans-serif", fontStyle: "italic" }}
             >
               {entry.phonetic}
             </span>
-            <span className="text-white/25 text-base">·</span>
+            <span className="text-black/25 text-base">·</span>
             <span
-              className="text-white/65 text-base tracking-[0.15em] uppercase"
+              className="text-[#3d3d3d] text-base tracking-[0.15em] uppercase"
               style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500 }}
             >
               {entry.type}
@@ -201,12 +233,12 @@ function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: 
           </div>
 
           {/* Divider */}
-          <div className="h-px bg-white/8 mb-5" />
+          <div className="h-px bg-black/8 mb-5" />
 
           {/* Definition */}
           <p
             ref={definitionRef}
-            className={`text-white/75 mb-4${!isExpanded ? " line-clamp-4" : ""}`}
+            className={`text-[#3d3d3d] mb-4${!isExpanded ? " line-clamp-4" : ""}`}
             style={{
               fontFamily: "'Space Grotesk', sans-serif",
               fontSize: "1rem",
@@ -220,7 +252,7 @@ function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: 
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); onToggleExpand(); }}
-              className="mb-4 text-sm text-white/40 hover:text-white/70 transition-colors tracking-wide"
+              className="mb-4 text-sm text-black/40 hover:text-black transition-colors tracking-wide cursor-pointer"
               style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500 }}
             >
               {isExpanded ? "Ver menos" : "Ver más"}
@@ -229,7 +261,7 @@ function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: 
 
           {/* Example */}
           <blockquote
-            className="text-white/65 border-l border-white/15 pl-3"
+            className="text-[#3d3d3d] border-l border-black/15 pl-3"
             style={{
               fontFamily: "'Space Grotesk', sans-serif",
               fontStyle: "italic",
@@ -315,17 +347,17 @@ export function DiccionarioBeele() {
   return (
     <section
       id="diccionario"
-      className="bg-black py-12 lg:py-20 overflow-hidden"
+      className="bg-white py-12 lg:py-20 overflow-hidden"
       style={{ fontFamily: "'Space Grotesk', sans-serif" }}
     >
       {/* Header */}
       <div className="max-w-7xl mx-auto px-6 lg:px-10 mb-6">
         <RevealOnScroll animation="fade-up">
-          <SectionHeader label="Diccionario Beéle" title="El idioma de Beéle" light />
+          <SectionHeader label="Diccionario Beéle" title="El idioma de Beéle" />
         </RevealOnScroll>
         <RevealOnScroll animation="fade-up" delay={100}>
           <p
-            className="text-white/65 text-base"
+            className="text-[#3d3d3d] text-base"
             style={{ fontFamily: "'Space Grotesk', sans-serif" }}
           >
             {DICTIONARY.length} palabras · Desliza para explorar
@@ -335,9 +367,9 @@ export function DiccionarioBeele() {
 
       {/* Progress bar */}
       <RevealOnScroll animation="fade-in" delay={150} className="max-w-7xl mx-auto px-6 lg:px-10 mb-5">
-        <div className="h-px bg-white/8 relative">
+        <div className="h-px bg-black/8 relative">
           <div
-            className="absolute top-0 left-0 h-full bg-white transition-all duration-300"
+            className="absolute top-0 left-0 h-full bg-black transition-all duration-300"
             style={{ width: `${((selectedIndex + 1) / DICTIONARY.length) * 100}%` }}
           />
         </div>
@@ -370,7 +402,7 @@ export function DiccionarioBeele() {
           <button
             type="button"
             onClick={scrollPrev}
-            className="w-9 h-9 border border-white/20 flex items-center justify-center hover:border-white hover:bg-white hover:text-black transition-all text-white"
+            className="w-9 h-9 border border-black/20 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all cursor-pointer"
             aria-label="Entrada anterior"
           >
             <ArrowLeft size={13} />
@@ -378,14 +410,14 @@ export function DiccionarioBeele() {
 
           <div className="flex items-center gap-1.5 min-w-[4rem] justify-center">
             <span
-              className="text-white tabular-nums"
+              className="text-black tabular-nums"
               style={{ fontFamily: "'Raleway', sans-serif", fontSize: "0.9rem", fontWeight: 700, letterSpacing: "0.08em" }}
             >
               {String(selectedIndex + 1).padStart(2, "0")}
             </span>
-            <span className="text-white/20 text-xs">/</span>
+            <span className="text-black/20 text-xs">/</span>
             <span
-              className="text-white/35 tabular-nums"
+              className="text-black/30 tabular-nums"
               style={{ fontFamily: "'Raleway', sans-serif", fontSize: "0.9rem", fontWeight: 700, letterSpacing: "0.08em" }}
             >
               {String(DICTIONARY.length).padStart(2, "0")}
@@ -395,7 +427,7 @@ export function DiccionarioBeele() {
           <button
             type="button"
             onClick={scrollNext}
-            className="w-9 h-9 border border-white/20 flex items-center justify-center hover:border-white hover:bg-white hover:text-black transition-all text-white"
+            className="w-9 h-9 border border-black/20 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all cursor-pointer"
             aria-label="Siguiente entrada"
           >
             <ArrowRight size={13} />
@@ -407,7 +439,7 @@ export function DiccionarioBeele() {
           href={PLAYLIST_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="md:absolute md:left-6 lg:left-10 flex items-center gap-1.5 text-white/65 hover:text-white transition-colors text-base tracking-widest uppercase"
+          className="md:absolute md:left-6 lg:left-10 flex items-center gap-1.5 text-[#3d3d3d] hover:text-black transition-colors text-base tracking-widest uppercase"
           style={{ fontWeight: 500 }}
         >
           Ver playlist

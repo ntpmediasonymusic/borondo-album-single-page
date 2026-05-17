@@ -1,6 +1,9 @@
+import { useState, useCallback } from "react";
 import { Download } from "lucide-react";
 import { SectionHeader } from "./SectionLabel";
 import { RevealOnScroll } from "./RevealOnScroll";
+import { StickerRegistrationModal } from "./StickerRegistrationModal";
+import { hasNewsletterCookie } from "@/app/utils/newsletterCookie";
 import albumCover from "../../imports/Beele-borondo-album-cover.jpg";
 import gatefold from "../../imports/GATEFOLD_01.jpg";
 import stickerBorondo from "../../imports/stickers/beeleStickerBorondo.png";
@@ -79,7 +82,42 @@ const stickers = [
   },
 ];
 
+const PACK_URL = "/downloads/borondo-whatsapp-stickers.zip";
+const PACK_NAME = "borondo-whatsapp-stickers.zip";
+
+function triggerDownload(url: string, name: string) {
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
 export function WhatsAppStickers() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [pendingDownload, setPendingDownload] = useState<{ url: string; name: string } | null>(null);
+
+  const requestDownload = useCallback((url: string, name: string) => {
+    if (hasNewsletterCookie()) {
+      triggerDownload(url, name);
+    } else {
+      setPendingDownload({ url, name });
+      setModalOpen(true);
+    }
+  }, []);
+
+  const handleSuccessComplete = useCallback(() => {
+    if (pendingDownload) {
+      triggerDownload(pendingDownload.url, pendingDownload.name);
+      setPendingDownload(null);
+    }
+  }, [pendingDownload]);
+
+  const handleClose = useCallback(() => {
+    setModalOpen(false);
+  }, []);
+
   return (
     <section
       id="stickers"
@@ -98,12 +136,12 @@ export function WhatsAppStickers() {
           <RevealOnScroll animation="fade-right" delay={100}>
             <div className="grid grid-cols-3 gap-4">
               {stickers.map((s) => (
-                <a
+                <button
                   key={s.id}
-                  href={s.downloadUrl}
-                  download={s.downloadName}
+                  onClick={() => requestDownload(s.downloadUrl, s.downloadName)}
                   aria-label={`Descargar ${s.alt}`}
-                  className="flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/60 focus-visible:outline-offset-4 rounded-sm cursor-pointer"
+                  type="button"
+                  className="flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/60 focus-visible:outline-offset-4 rounded-sm cursor-pointer bg-transparent border-0 p-0"
                   style={{ transform: `rotate(${s.rotate}deg)` }}
                 >
                   <img
@@ -117,7 +155,7 @@ export function WhatsAppStickers() {
                       "--levitate-delay": `${s.delay}s`,
                     } as React.CSSProperties}
                   />
-                </a>
+                </button>
               ))}
             </div>
 
@@ -131,11 +169,11 @@ export function WhatsAppStickers() {
               Descarga el pack y comparte lo que llevas dentro.
             </p>
 
-            <a
-              href="/downloads/borondo-whatsapp-stickers.zip"
-              download="borondo-whatsapp-stickers.zip"
+            <button
+              type="button"
+              onClick={() => requestDownload(PACK_URL, PACK_NAME)}
               aria-label="Descargar pack completo de stickers Borondo"
-              className="inline-flex items-center gap-3 bg-white text-black px-8 py-4 hover:bg-white/85 transition-colors group"
+              className="inline-flex items-center gap-3 bg-white text-black px-8 py-4 hover:bg-white/85 transition-colors group cursor-pointer border-0"
             >
               <Download
                 size={14}
@@ -147,7 +185,7 @@ export function WhatsAppStickers() {
               >
                 Descargar Pack
               </span>
-            </a>
+            </button>
 
             <p
               className="text-white/65 mt-3"
@@ -221,6 +259,12 @@ export function WhatsAppStickers() {
 
         </div>
       </div>
+
+      <StickerRegistrationModal
+        isOpen={modalOpen}
+        onClose={handleClose}
+        onSuccessComplete={handleSuccessComplete}
+      />
     </section>
   );
 }

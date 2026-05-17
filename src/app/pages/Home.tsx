@@ -29,11 +29,11 @@ export function Home() {
     >
       <Navigation theme="dark" />
       <Hero />
+      <MerchSection />
       <TrackByTrack />
       <VideoSection />
       <WhatsAppStickers />
       <DiccionarioBeele />
-      <MerchSection />
       <RegistrationForm />
       <Footer />
     </div>
