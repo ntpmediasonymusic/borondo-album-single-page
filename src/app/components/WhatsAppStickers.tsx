@@ -124,6 +124,20 @@ export function WhatsAppStickers() {
       className="bg-black py-24 lg:py-36 overflow-hidden"
       style={{ fontFamily: "'Space Grotesk', sans-serif" }}
     >
+      <style>{`
+        .sticker-protected {
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          user-select: none;
+          -webkit-user-drag: none;
+          touch-action: manipulation;
+        }
+        .sticker-protected img {
+          -webkit-touch-callout: none;
+          -webkit-user-drag: none;
+          pointer-events: none;
+        }
+      `}</style>
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <RevealOnScroll animation="fade-up">
           <SectionHeader label="WhatsApp Stickers" title="Llévalos contigo" light />
@@ -139,9 +153,10 @@ export function WhatsAppStickers() {
                 <button
                   key={s.id}
                   onClick={() => requestDownload(s.downloadUrl, s.downloadName)}
-                  aria-label={`Descargar ${s.alt}`}
+                  onContextMenu={(e) => e.preventDefault()}
+                  aria-label={`Seleccionar ${s.alt} para descargar`}
                   type="button"
-                  className="flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/60 focus-visible:outline-offset-4 rounded-sm cursor-pointer bg-transparent border-0 p-0"
+                  className="sticker-protected select-none flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/60 focus-visible:outline-offset-4 rounded-sm cursor-pointer bg-transparent border-0 p-0"
                   style={{ transform: `rotate(${s.rotate}deg)` }}
                 >
                   <img
@@ -149,6 +164,7 @@ export function WhatsAppStickers() {
                     alt={s.alt}
                     loading="lazy"
                     decoding="async"
+                    draggable={false}
                     className="sticker-img w-full h-auto max-w-[120px] drop-shadow-lg"
                     style={{
                       "--levitate-duration": `${s.duration}s`,
