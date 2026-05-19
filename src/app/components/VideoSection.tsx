@@ -27,10 +27,10 @@ const VIDEOS: VideoEntry[] = [
     subtitle: "5020 RCRDS Sessions Vol. 2",
   },
   {
-    id: "la-patadita",
-    youtubeId: "SHzq4ohh9mg",
-    title: "la patadita",
-    subtitle: "The Making of · ft. Elvis Crespo",
+    id: "si-te-pillara",
+    youtubeId: "GOS_HP_F-FY",
+    title: "si te pillara",
+    subtitle: "Performance / Lyrics",
   },
   {
     id: "mi-refe",

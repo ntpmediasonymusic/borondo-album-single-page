@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import heroBg from "../../imports/beele-borondo-landing-aniversario-v2.png";
-import albumCover from "../../imports/Beele-borondo-5020Sessions-album-cover.jpg";
+import albumCover from "../../imports/Beele-borondo-album-cover.jpg";
 import beeleLogo from "../../imports/beele-B.png";
 
 function tr(prefersReduced: boolean, props: string, ms: number, delayMs = 0): string {
@@ -106,7 +106,34 @@ export function Hero() {
         />
       </div>
 
-      {/* ── LAYER 3 — Main content ── */}
+      {/* ── LAYER 3 — "1ER ANIVERSARIO" floating label ── */}
+      <div
+        className="absolute z-10 pointer-events-none select-none
+          left-6 bottom-[20%]
+          sm:left-auto sm:right-[8vw] sm:bottom-[10vh] sm:text-right"
+        aria-hidden="true"
+        style={{
+          opacity: loaded ? 1 : 0,
+          transform: loaded ? "translateY(0px)" : "translateY(18px)",
+          transition: tr(p, "opacity, transform", 900, 600),
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "'Raleway', sans-serif",
+            fontWeight: 900,
+            fontSize: "clamp(1.35rem, 3.5vw, 2rem)",
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            color: "rgba(255,255,255,0.82)",
+            lineHeight: 1,
+          }}
+        >
+          1er Aniversario
+        </p>
+      </div>
+
+      {/* ── LAYER 4 — Main content ── */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 flex flex-col min-h-screen">
 
         {/* Spacer — pushes bottom bar to the bottom */}
@@ -158,7 +185,7 @@ export function Hero() {
 
             {/* Editorial text block */}
             <div className="flex flex-col gap-0.5">
-              {/* <p
+              <p
                 className="text-white/50"
                 style={{
                   fontFamily: "'Space Grotesk', sans-serif",
@@ -170,7 +197,7 @@ export function Hero() {
                 }}
               >
                 Beéle
-              </p> */}
+              </p>
               <p
                 style={{
                   fontFamily: "'Raleway', sans-serif",
@@ -183,19 +210,6 @@ export function Hero() {
                 }}
               >
                 Borondo
-              </p>
-              <p
-                className="text-white/55 mt-1"
-                style={{
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  fontSize: "0.65rem",
-                  letterSpacing: "0.34em",
-                  textTransform: "uppercase",
-                  fontWeight: 500,
-                  lineHeight: 1.6,
-                }}
-              >
-                1er Aniversario
               </p>
               {/* Thin separator */}
               <div
