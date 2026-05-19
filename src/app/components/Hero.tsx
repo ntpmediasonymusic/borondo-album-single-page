@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import heroBg from "../../imports/beele-borondo-landing-aniversario-v2.png";
 import albumCover from "../../imports/Beele-borondo-5020Sessions-album-cover.jpg";
+import beeleLogo from "../../imports/beele-B.png";
 
-// Build a CSS transition string for one or more comma-separated properties.
-// Returns "none" when the user prefers reduced motion.
 function tr(prefersReduced: boolean, props: string, ms: number, delayMs = 0): string {
   if (prefersReduced) return "none";
   const ease = "cubic-bezier(0.22, 0.61, 0.36, 1)";
@@ -14,63 +13,42 @@ function tr(prefersReduced: boolean, props: string, ms: number, delayMs = 0): st
 }
 
 export function Hero() {
-  // Entry animation state: false = hidden, true = visible
   const [loaded, setLoaded] = useState(false);
 
-  // Layer refs for multi-speed parallax
   const sectionRef = useRef<HTMLElement>(null);
-  const photoRef   = useRef<HTMLDivElement>(null); // hero bg — speed 0.12
-  const graphicRef = useRef<HTMLDivElement>(null); // ghost "BORONDO" — speed 0.05
+  const bgRef      = useRef<HTMLDivElement>(null);  // background — speed 0.12
+  const logoRef    = useRef<HTMLDivElement>(null);  // B logo — speed 0.07
   const rafRef     = useRef<number>(0);
 
-  // Read once at mount — stable for session lifecycle
   const prefersReduced = useRef(
     typeof window !== "undefined"
       ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
       : false
   ).current;
 
-  // Trigger the entry animation on first paint
   useEffect(() => {
-    if (prefersReduced) {
-      setLoaded(true);
-      return;
-    }
+    if (prefersReduced) { setLoaded(true); return; }
     const t = setTimeout(() => setLoaded(true), 40);
     return () => clearTimeout(t);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Multi-layer parallax via requestAnimationFrame
   useEffect(() => {
     if (prefersReduced) return;
-
     const handleScroll = () => {
       cancelAnimationFrame(rafRef.current);
       rafRef.current = requestAnimationFrame(() => {
         const y = window.scrollY;
-        // Stop parallax once the section is past the viewport
         const h = sectionRef.current?.offsetHeight ?? window.innerHeight;
         if (y > h) return;
-
-        if (photoRef.current) {
-          // artist photo moves faster → feels closer to camera
-          photoRef.current.style.transform = `translate3d(0, ${y * 0.12}px, 0)`;
-        }
-        if (graphicRef.current) {
-          // ghost outline text at farthest depth
-          graphicRef.current.style.transform = `translate3d(0, ${y * 0.05}px, 0)`;
-        }
+        if (bgRef.current)   bgRef.current.style.transform   = `translate3d(0, ${y * 0.12}px, 0)`;
+        if (logoRef.current) logoRef.current.style.transform = `translate3d(0, ${y * 0.07}px, 0)`;
       });
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      cancelAnimationFrame(rafRef.current);
-    };
+    return () => { window.removeEventListener("scroll", handleScroll); cancelAnimationFrame(rafRef.current); };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const p = prefersReduced; // shorthand for JSX
+  const p = prefersReduced;
 
   return (
     <section
@@ -79,20 +57,9 @@ export function Hero() {
       className="relative min-h-screen bg-black overflow-hidden pt-4"
       style={{ fontFamily: "'Space Grotesk', sans-serif" }}
     >
-      {/* Mobile: scale headline to viewport width so "Borondo" never clips */}
-      <style>{`
-        @media (max-width: 639px) {
-          .hero-title { font-size: clamp(2.75rem, 13.5vw, 4.5rem) !important; }
-        }
-      `}</style>
-
-      {/* ──────────────────────────────────────────────────────────────────────
-          LAYER 1 — Hero background image (full width)
-          Parallax on the outer div (JS sets transform).
-          Entry: opacity fade on outer + scale on the img (no conflict).
-      ─────────────────────────────────────────────────────────────────────── */}
+      {/* ── LAYER 1 — Hero background image ── */}
       <div
-        ref={photoRef}
+        ref={bgRef}
         className="absolute inset-0 h-[110%] -mt-[5%] w-full pointer-events-none"
         aria-hidden="true"
         style={{
@@ -113,109 +80,44 @@ export function Hero() {
             transformOrigin: "50% 20%",
           }}
         />
-        {/* Gradient: darken left side for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
-        {/* Gradient: fade top & bottom */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
+        {/* Darken left for readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/35 to-transparent" />
+        {/* Darken top & bottom */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
       </div>
 
-      {/* ──────────────────────────────────────────────────────────────────────
-          LAYER 3 — Ghost outline "BORONDO" (decorative bottom text)
-          Parallax on the outer div; entry animation on the inner span.
-      ─────────────────────────────────────────────────────────────────────── */}
+      {/* ── LAYER 2 — Beéle "B" decorative watermark ── */}
       <div
-        ref={graphicRef}
-        className="absolute inset-0 flex items-end pointer-events-none select-none overflow-hidden"
+        ref={logoRef}
+        className="absolute inset-0 flex items-center justify-start pointer-events-none select-none p-0 top-100 md:top-0 md:p-10"
         aria-hidden="true"
         style={{ willChange: "transform" }}
       >
-        <span
-          className="leading-none -mb-6 -ml-3 lg:-ml-5 whitespace-nowrap"
+        <img
+          src={beeleLogo}
+          alt=""
+          decoding="async"
           style={{
-            fontFamily: "'Raleway', sans-serif",
-            fontWeight: 900,
-            fontSize: "clamp(11rem, 26vw, 32rem)",
-            color: "transparent",
-            WebkitTextStroke: "1px rgba(255,255,255,0.045)",
-            letterSpacing: "0.04em",
-            textTransform: "uppercase",
-            // Entry: fade up from below
-            opacity: loaded ? 1 : 0,
-            transform: loaded ? "translateY(0px)" : "translateY(28px)",
-            transition: tr(p, "opacity, transform", 1200, 350),
+            width: "min(62vw, 540px)",
+            filter: "invert(0)",
+            opacity: loaded ? 0.4 : 0,
+            transition: tr(p, "opacity", 1600, 200),
           }}
-        >
-          BORONDO
-        </span>
+        />
       </div>
 
-      {/* ──────────────────────────────────────────────────────────────────────
-          LAYER 4 — Main content (no parallax — stays readable during scroll)
-      ─────────────────────────────────────────────────────────────────────── */}
+      {/* ── LAYER 3 — Main content ── */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 flex flex-col min-h-screen">
 
-        {/* ── Vertical centre: eyebrow + headline + subtitle ── */}
-        <div className="flex-1 flex flex-col justify-center pt-20">
-
-          {/* Artist eyebrow label — slides in from left */}
-          <span
-            className="text-white/70 mb-5 block"
-            style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: "1rem",
-              letterSpacing: "0.38em",
-              textTransform: "uppercase",
-              fontWeight: 500,
-              opacity: loaded ? 1 : 0,
-              transform: loaded ? "translateX(0px)" : "translateX(-24px)",
-              transition: tr(p, "opacity, transform", 900, 380),
-            }}
-          >
-            Beéle
-          </span>
-
-          {/* H1 — powerful fade-up entrance */}
-          <h1
-            className="hero-title text-white whitespace-nowrap"
-            style={{
-              fontFamily: "'Raleway', sans-serif",
-              fontWeight: 900,
-              fontSize: "clamp(4.5rem, 11vw, 13rem)",
-              lineHeight: 0.92,
-              letterSpacing: "0.07em",
-              textTransform: "uppercase",
-              opacity: loaded ? 1 : 0,
-              transform: loaded ? "translateY(0px)" : "translateY(44px)",
-              transition: tr(p, "opacity, transform", 900, 500),
-            }}
-          >
-            Borondo
-          </h1>
-
-          {/* Subtitle — follows title */}
-          <span
-            className="text-white mt-4 block"
-            style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: "clamp(1rem, 2.5vw, 2rem)",
-              letterSpacing: "0.28em",
-              textTransform: "uppercase",
-              fontWeight: 500,
-              opacity: loaded ? 1 : 0,
-              transform: loaded ? "translateY(0px)" : "translateY(24px)",
-              transition: tr(p, "opacity, transform", 800, 660),
-            }}
-          >
-            1er Aniversario
-          </span>
-        </div>
+        {/* Spacer — pushes bottom bar to the bottom */}
+        <div className="flex-1" />
 
         {/* ── Bottom bar ── */}
         <div className="pb-10">
 
-          {/* Divider line — grow from left to right */}
+          {/* Divider line */}
           <div
-            className="mb-8"
+            className="mb-6"
             style={{
               height: "1px",
               backgroundColor: "rgba(255,255,255,0.1)",
@@ -226,70 +128,107 @@ export function Hero() {
             }}
           />
 
-          <div className="flex items-end justify-between gap-6">
-
-            {/* Left: album polaroid + meta text */}
-            <div className="flex items-end gap-5">
-
-              {/* Album cover polaroid — scale in, keep the tilt */}
+          <div
+            className="flex items-end gap-5 sm:gap-7"
+            style={{
+              opacity: loaded ? 1 : 0,
+              transform: loaded ? "translateY(0px)" : "translateY(16px)",
+              transition: tr(p, "opacity, transform", 700, 800),
+            }}
+          >
+            {/* Album cover polaroid */}
+            <div
+              className="flex-shrink-0 hidden sm:block"
+              style={{
+                transform: "rotate(-2.5deg)",
+              }}
+            >
               <div
-                className="flex-shrink-0 hidden sm:block"
-                style={{
-                  opacity: loaded ? 1 : 0,
-                  transform: loaded
-                    ? "rotate(-2.5deg) scale(1)"
-                    : "rotate(-2.5deg) scale(0.76)",
-                  transition: tr(p, "opacity, transform", 700, 800),
-                }}
+                className="bg-white p-1.5"
+                style={{ width: 76, boxShadow: "0 6px 28px rgba(0,0,0,0.75)" }}
               >
-                <div
-                  className="bg-white p-1.5"
-                  style={{ width: 80, boxShadow: "0 6px 28px rgba(0,0,0,0.75)" }}
-                >
-                  <img
-                    src={albumCover}
-                    alt="Borondo — Álbum"
-                    decoding="async"
-                    className="w-full aspect-square object-cover"
-                  />
-                </div>
-              </div>
-
-              {/* Text meta — fade up last */}
-              <div
-                style={{
-                  opacity: loaded ? 1 : 0,
-                  transform: loaded ? "translateY(0px)" : "translateY(16px)",
-                  transition: tr(p, "opacity, transform", 600, 900),
-                }}
-              >
-                <p
-                  className="text-white/65"
-                  style={{
-                    fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: "1rem",
-                    letterSpacing: "0.32em",
-                    textTransform: "uppercase",
-                    fontWeight: 500,
-                  }}
-                >
-                  Álbum · 2025
-                </p>
-                <p
-                  className="text-white/65 mt-0.5"
-                  style={{
-                    fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: "1rem",
-                    letterSpacing: "0.28em",
-                    textTransform: "uppercase",
-                    fontWeight: 400,
-                  }}
-                >
-                  26 canciones
-                </p>
+                <img
+                  src={albumCover}
+                  alt="Borondo — Álbum"
+                  decoding="async"
+                  className="w-full aspect-square object-cover"
+                />
               </div>
             </div>
 
+            {/* Editorial text block */}
+            <div className="flex flex-col gap-0.5">
+              {/* <p
+                className="text-white/50"
+                style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: "0.65rem",
+                  letterSpacing: "0.38em",
+                  textTransform: "uppercase",
+                  fontWeight: 500,
+                  lineHeight: 1.6,
+                }}
+              >
+                Beéle
+              </p> */}
+              <p
+                style={{
+                  fontFamily: "'Raleway', sans-serif",
+                  fontSize: "clamp(1.35rem, 3.5vw, 2rem)",
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  fontWeight: 900,
+                  color: "white",
+                  lineHeight: 1,
+                }}
+              >
+                Borondo
+              </p>
+              <p
+                className="text-white/55 mt-1"
+                style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: "0.65rem",
+                  letterSpacing: "0.34em",
+                  textTransform: "uppercase",
+                  fontWeight: 500,
+                  lineHeight: 1.6,
+                }}
+              >
+                1er Aniversario
+              </p>
+              {/* Thin separator */}
+              <div
+                className="my-2"
+                style={{ height: "1px", width: "100%", backgroundColor: "rgba(255,255,255,0.12)" }}
+              />
+              <p
+                className="text-white/45"
+                style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: "0.65rem",
+                  letterSpacing: "0.32em",
+                  textTransform: "uppercase",
+                  fontWeight: 500,
+                  lineHeight: 1.6,
+                }}
+              >
+                Álbum · 2025
+              </p>
+              {/* <p
+                className="text-white/40"
+                style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: "0.65rem",
+                  letterSpacing: "0.28em",
+                  textTransform: "uppercase",
+                  fontWeight: 400,
+                  lineHeight: 1.6,
+                }}
+              >
+                26 canciones
+              </p> */}
+            </div>
           </div>
         </div>
       </div>

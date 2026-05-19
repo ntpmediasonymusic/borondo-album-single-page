@@ -309,7 +309,7 @@ function FeatureProduct({ product }: { product: MerchProduct }) {
               </>
             ) : (
               <>
-                IR A LA TIENDA
+                Compra ahora
                 <ArrowUpRight size={16} />
               </>
             )}
