@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import path from 'path'
+import fs from 'fs'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 
@@ -16,6 +17,25 @@ function figmaAssetResolver() {
   }
 }
 
+// Generates a copy of index.html for each client-side route so FastTrack
+// (and any static host) can serve them on direct navigation without a 404.
+// Also writes 404.html as a catch-all fallback for unknown paths.
+function staticRoutesFallback() {
+  return {
+    name: 'static-routes-fallback',
+    apply: 'build' as const,
+    closeBundle() {
+      const html = fs.readFileSync('dist/index.html', 'utf-8')
+      const routes = ['style-guide', 'cartas-a-beele']
+      for (const route of routes) {
+        fs.mkdirSync(`dist/${route}`, { recursive: true })
+        fs.writeFileSync(`dist/${route}/index.html`, html)
+      }
+      fs.writeFileSync('dist/404.html', html)
+    },
+  }
+}
+
 export default defineConfig({
   plugins: [
     figmaAssetResolver(),
@@ -23,6 +43,7 @@ export default defineConfig({
     // Tailwind is not being actively used – do not remove them
     react(),
     tailwindcss(),
+    staticRoutesFallback(),
   ],
   resolve: {
     alias: {

@@ -1,9 +1,6 @@
-import { ArrowUpRight } from "lucide-react";
 import { useNavigate, useLocation } from "react-router";
 import logo5020 from "../../imports/5020rcrds_LOGOS_PNG-05_(2).png";
 import { RevealOnScroll } from "./RevealOnScroll";
-
-const SHOPIFY_URL = "https://shopify.com";
 
 const socialLinks = [
   {

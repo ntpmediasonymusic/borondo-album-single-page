@@ -4,7 +4,6 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { SectionHeader } from "./SectionLabel";
 import { RevealOnScroll } from "./RevealOnScroll";
 
-import artistDark from "../../imports/download-1.jpg";
 import albumCover from "../../imports/Beele-borondo-album-cover.jpg";
 
 import MadKoknut from "../../imports/track-by-track/5020_Beeele_2026_Sessions_Cover Arts_Mad Koknut_1_E.jpg";

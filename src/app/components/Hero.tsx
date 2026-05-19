@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import artistPhoto from "../../imports/download-1.jpg";
+import heroBg from "../../imports/beele-borondo-landing-aniversario-v2.png";
 import albumCover from "../../imports/Beele-borondo-5020Sessions-album-cover.jpg";
-import beeleLogo from "../../imports/beele-B.png";
 
 // Build a CSS transition string for one or more comma-separated properties.
 // Returns "none" when the user prefers reduced motion.
@@ -20,8 +19,7 @@ export function Hero() {
 
   // Layer refs for multi-speed parallax
   const sectionRef = useRef<HTMLElement>(null);
-  const photoRef   = useRef<HTMLDivElement>(null); // artist photo — speed 0.12
-  const logoRef    = useRef<HTMLDivElement>(null); // Beéle "B" logo — speed 0.07
+  const photoRef   = useRef<HTMLDivElement>(null); // hero bg — speed 0.12
   const graphicRef = useRef<HTMLDivElement>(null); // ghost "BORONDO" — speed 0.05
   const rafRef     = useRef<number>(0);
 
@@ -58,10 +56,6 @@ export function Hero() {
           // artist photo moves faster → feels closer to camera
           photoRef.current.style.transform = `translate3d(0, ${y * 0.12}px, 0)`;
         }
-        if (logoRef.current) {
-          // decorative "B" at medium depth
-          logoRef.current.style.transform = `translate3d(0, ${y * 0.07}px, 0)`;
-        }
         if (graphicRef.current) {
           // ghost outline text at farthest depth
           graphicRef.current.style.transform = `translate3d(0, ${y * 0.05}px, 0)`;
@@ -93,13 +87,13 @@ export function Hero() {
       `}</style>
 
       {/* ──────────────────────────────────────────────────────────────────────
-          LAYER 1 — Artist photo (right half)
+          LAYER 1 — Hero background image (full width)
           Parallax on the outer div (JS sets transform).
           Entry: opacity fade on outer + scale on the img (no conflict).
       ─────────────────────────────────────────────────────────────────────── */}
       <div
         ref={photoRef}
-        className="absolute right-0 top-0 h-[110%] -mt-[5%] w-full md:w-[58%] pointer-events-none"
+        className="absolute inset-0 h-[110%] -mt-[5%] w-full pointer-events-none"
         aria-hidden="true"
         style={{
           opacity: loaded ? 1 : 0,
@@ -107,48 +101,22 @@ export function Hero() {
           willChange: "transform, opacity",
         }}
       >
-        {/* Scale from 1.06 → 1 on load (img only, no conflict with parallax on outer) */}
         <img
-          src={artistPhoto}
+          src={heroBg}
           alt=""
           fetchPriority="high"
           decoding="sync"
           className="w-full h-full object-cover object-center"
           style={{
-            filter: "grayscale(100%) contrast(1.06)",
-            opacity: 0.65,
             transform: loaded ? "scale(1)" : "scale(1.06)",
             transition: tr(p, "transform", 1600),
             transformOrigin: "50% 20%",
           }}
         />
-        {/* Gradient: fade into black on the left */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/55 to-transparent" />
+        {/* Gradient: darken left side for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
         {/* Gradient: fade top & bottom */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/40" />
-      </div>
-
-      {/* ──────────────────────────────────────────────────────────────────────
-          LAYER 2 — Beéle "B" decorative watermark
-          Parallax on the outer div; opacity animation on the img.
-      ─────────────────────────────────────────────────────────────────────── */}
-      <div
-        ref={logoRef}
-        className="absolute inset-0 flex items-center justify-start pointer-events-none select-none p-5"
-        aria-hidden="true"
-        style={{ willChange: "transform" }}
-      >
-        <img
-          src={beeleLogo}
-          alt=""
-          decoding="async"
-          style={{
-            width: "min(62vw, 540px)",
-            filter: "invert(0)",
-            opacity: loaded ? 0.4 : 0,
-            transition: tr(p, "opacity", 1600, 200),
-          }}
-        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
       </div>
 
       {/* ──────────────────────────────────────────────────────────────────────

@@ -223,14 +223,24 @@ export function RegistrationForm() {
 
                 {/* Consent */}
                 <div className="pt-2">
-                  <label className="flex items-start gap-4 cursor-pointer group">
-                    <div
-                      onClick={() => update("consent", !form.consent)}
-                      className={`w-5 h-5 mt-0.5 border flex-shrink-0 flex items-center justify-center transition-colors ${
-                        form.consent ? "bg-white border-white" : "border-white/30 hover:border-white/60"
-                      }`}
-                    >
-                      {form.consent && <Check size={11} className="text-black" strokeWidth={3} />}
+                  <label htmlFor="consent" className="flex items-start gap-4 cursor-pointer group">
+                    <div className="relative flex-shrink-0">
+                      <input
+                        type="checkbox"
+                        id="consent"
+                        checked={form.consent}
+                        onChange={(e) => update("consent", e.target.checked)}
+                        className="peer sr-only"
+                        aria-invalid={Boolean(errors.consent)}
+                      />
+                      <div
+                        aria-hidden="true"
+                        className={`w-5 h-5 mt-0.5 border flex items-center justify-center transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-white peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-black ${
+                          form.consent ? "bg-white border-white" : "border-white/30 hover:border-white/60"
+                        }`}
+                      >
+                        {form.consent && <Check size={11} className="text-black" strokeWidth={3} />}
+                      </div>
                     </div>
                     <span className="text-white/65 text-base leading-relaxed">
                       Acepto recibir comunicaciones de Beéle / Borondo. Puedo cancelar
