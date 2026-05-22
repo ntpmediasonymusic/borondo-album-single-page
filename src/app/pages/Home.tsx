@@ -6,6 +6,7 @@ import { TrackByTrack } from "../components/TrackByTrack";
 import { WhatsAppStickers } from "../components/WhatsAppStickers";
 import { VideoSection } from "../components/VideoSection";
 import { DiccionarioBeele } from "../components/DiccionarioBeele";
+import { CartaBeelePreview } from "../components/CartaBeelePreview";
 import { MerchSection } from "../components/MerchSection";
 import { RegistrationForm } from "../components/RegistrationForm";
 import { Footer } from "../components/Footer";
@@ -34,6 +35,7 @@ export function Home() {
       <VideoSection />
       <WhatsAppStickers />
       <DiccionarioBeele />
+      <CartaBeelePreview />
       <RegistrationForm />
       <Footer />
     </div>
