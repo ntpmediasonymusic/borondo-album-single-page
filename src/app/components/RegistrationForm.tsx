@@ -269,7 +269,7 @@ export function RegistrationForm() {
                   >
                     {submitting ? (
                       <>
-                        <Loader2 size={14} className="animate-spin" />
+                        <Loader2 size={14} aria-hidden="true" className="animate-spin" />
                         <span className="text-base tracking-widest uppercase" style={{ fontWeight: 600 }}>
                           Enviando...
                         </span>
@@ -281,6 +281,7 @@ export function RegistrationForm() {
                         </span>
                         <ArrowRight
                           size={14}
+                          aria-hidden="true"
                           className="transition-transform group-hover:translate-x-1"
                         />
                       </>

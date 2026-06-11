@@ -243,7 +243,7 @@ function VideoModal({
             textTransform: "uppercase",
           }}
         >
-          Cerrar <X size={13} />
+          Cerrar <X size={13} aria-hidden="true" />
         </button>
 
         {/* 16:9 iframe — only mounted while modal is open */}
@@ -315,7 +315,7 @@ export function VideoSection() {
               style={{ fontWeight: 500 }}
             >
               Ver video de Borondo
-              <ArrowUpRight size={10} />
+              <ArrowUpRight size={10} aria-hidden="true" />
             </a>
           </RevealOnScroll>
 
@@ -380,7 +380,7 @@ export function VideoSection() {
                 style={{ fontWeight: 500 }}
               >
                 Ver video de Borondo
-                <ArrowUpRight size={10} />
+                <ArrowUpRight size={10} aria-hidden="true" />
               </a>
             </RevealOnScroll>
           </div>

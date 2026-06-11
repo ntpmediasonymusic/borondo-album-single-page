@@ -128,7 +128,7 @@ export function Navigation({ theme = "dark" }: NavigationProps) {
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Abrir menú"
             >
-              {menuOpen ? <X size={20} /> : <Menu size={20} />}
+              {menuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
             </button>
           </div>
         </div>

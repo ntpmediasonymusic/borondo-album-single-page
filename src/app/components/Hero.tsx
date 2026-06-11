@@ -217,7 +217,7 @@ export function Hero() {
                 style={{ height: "1px", width: "100%", backgroundColor: "rgba(255,255,255,0.12)" }}
               />
               <p
-                className="text-white/45"
+                className="text-white/55"
                 style={{
                   fontFamily: "'Space Grotesk', sans-serif",
                   fontSize: "0.65rem",

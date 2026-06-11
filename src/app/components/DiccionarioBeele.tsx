@@ -107,7 +107,7 @@ const DICTIONARY: DictEntry[] = [
 
 function YoutubeMusicIcon({ size = 13 }: { size?: number }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="currentColor" viewBox="0 0 16 16">
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
       <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.01 2.01 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.01 2.01 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31 31 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.01 2.01 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A100 100 0 0 1 7.858 2zM6.4 5.209v4.818l4.157-2.408z" />
     </svg>
   );
@@ -143,6 +143,7 @@ function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: 
   return (
     <div
       onClick={handleClick}
+      aria-hidden={isSelected ? undefined : "true"}
       className={`flex-none w-[80vw] sm:w-[300px] lg:w-[330px] mr-3 lg:mr-5 transition-opacity duration-[400ms] select-none ${
         isSelected ? "opacity-100" : "opacity-35 cursor-pointer"
       }`}
@@ -171,6 +172,7 @@ function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: 
           <div className="flex items-center justify-between mb-5">
             <span
               className="text-black/15"
+              aria-hidden="true"
               style={{
                 fontFamily: "'Raleway', sans-serif",
                 fontWeight: 900,
@@ -187,6 +189,7 @@ function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: 
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
+                tabIndex={isSelected ? undefined : -1}
                 className="flex items-center gap-1 text-[#3d3d3d] hover:text-black transition-colors"
                 aria-label={`Ver "${entry.word}" en YouTube`}
               >
@@ -196,7 +199,7 @@ function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: 
                 >
                   <YoutubeMusicIcon size={24} />
                 </span>
-                <ArrowUpRight size={11} />
+                <ArrowUpRight size={11} aria-hidden="true" />
               </a>
             )}
           </div>
@@ -223,7 +226,7 @@ function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: 
             >
               {entry.phonetic}
             </span>
-            <span className="text-black/25 text-base">·</span>
+            <span className="text-black/25 text-base" aria-hidden="true">·</span>
             <span
               className="text-[#3d3d3d] text-base tracking-[0.15em] uppercase"
               style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500 }}
@@ -252,6 +255,7 @@ function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: 
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); onToggleExpand(); }}
+              tabIndex={isSelected ? undefined : -1}
               className="mb-4 text-sm text-black/40 hover:text-black transition-colors tracking-wide cursor-pointer"
               style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500 }}
             >
@@ -405,7 +409,7 @@ export function DiccionarioBeele() {
             className="w-9 h-9 border border-black/20 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all cursor-pointer"
             aria-label="Entrada anterior"
           >
-            <ArrowLeft size={13} />
+            <ArrowLeft size={13} aria-hidden="true" />
           </button>
 
           <div className="flex items-center gap-1.5 min-w-[4rem] justify-center">
@@ -430,7 +434,7 @@ export function DiccionarioBeele() {
             className="w-9 h-9 border border-black/20 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all cursor-pointer"
             aria-label="Siguiente entrada"
           >
-            <ArrowRight size={13} />
+            <ArrowRight size={13} aria-hidden="true" />
           </button>
         </div>
 
@@ -443,7 +447,7 @@ export function DiccionarioBeele() {
           style={{ fontWeight: 500 }}
         >
           Ver playlist
-          <ArrowUpRight size={9} />
+          <ArrowUpRight size={9} aria-hidden="true" />
         </a>
       </RevealOnScroll>
     </section>

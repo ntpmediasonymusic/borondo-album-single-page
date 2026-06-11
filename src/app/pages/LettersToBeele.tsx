@@ -3,6 +3,21 @@ import { Link } from "react-router";
 import { Navigation } from "../components/Navigation";
 import { Footer } from "../components/Footer";
 
+function fixWyngPresentationRoles(root: Element | Document = document) {
+  // Wyng renders .flex-grid-item divs with role="presentation"/"none" that contain
+  // focusable children. Per ARIA spec, role="none" is invalid on elements with
+  // interactive descendants — WCAG 4.1.2 (AI131-AI133). Removing the role restores
+  // correct AT semantics without any visual impact.
+  // TODO: report to Wyng so the fix lands in their widget. Remove this once resolved.
+  (root as Element | Document).querySelectorAll<HTMLElement>(
+    '.flex-grid-item[role="presentation"], .flex-grid-item[role="none"]'
+  ).forEach((el) => {
+    if (el.querySelector("a, button, input, select, textarea, [tabindex]")) {
+      el.removeAttribute("role");
+    }
+  });
+}
+
 export function LettersToBeele() {
   useEffect(() => {
     const FLAG = "cartas-hard-reload";
@@ -20,6 +35,14 @@ export function LettersToBeele() {
       script.integrity = "sha384-vjC1EXFjsSlKA3QP8KjOspJdRKdvD1JuyQhUQteL4vi6jimLXe910MiN5PzIQe1v";
       script.crossOrigin = "anonymous";
       document.body.appendChild(script);
+
+      // Watch for Wyng DOM mutations and strip invalid presentational roles.
+      const observer = new MutationObserver(() => fixWyngPresentationRoles());
+      observer.observe(document.body, { childList: true, subtree: true });
+      // Run once immediately in case Wyng already rendered synchronously.
+      fixWyngPresentationRoles();
+
+      return () => observer.disconnect();
     }
   }, []);
 
@@ -35,7 +58,7 @@ export function LettersToBeele() {
         {/* Back link */}
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-black/40 hover:text-black/70 transition-colors mb-14"
+          className="inline-flex items-center gap-2 text-black/60 hover:text-black/80 transition-colors mb-14"
           style={{
             fontSize: "0.8rem",
             letterSpacing: "0.3em",
@@ -50,7 +73,7 @@ export function LettersToBeele() {
         {/* Header */}
         <header className="mb-14">
           <span
-            className="text-black/40 mb-4 block"
+            className="text-black/60 mb-4 block"
             style={{
               fontSize: "0.78rem",
               letterSpacing: "0.38em",
@@ -78,7 +101,7 @@ export function LettersToBeele() {
           <div className="h-px bg-black/10 my-6" />
 
           <p
-            className="text-black/60 max-w-xl"
+            className="text-black/70 max-w-xl"
             style={{
               fontSize: "clamp(0.95rem, 2vw, 1.1rem)",
               lineHeight: 1.7,

@@ -193,6 +193,7 @@ export function WhatsAppStickers() {
             >
               <Download
                 size={14}
+                aria-hidden="true"
                 className="transition-transform group-hover:-translate-y-0.5"
               />
               <span

@@ -198,6 +198,7 @@ function FeatureProduct({ product }: { product: MerchProduct }) {
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
               <ZoomIn
                 size={28}
+                aria-hidden="true"
                 className="text-white opacity-0 group-hover:opacity-80 transition-opacity duration-300 drop-shadow-lg"
               />
             </div>
@@ -304,13 +305,13 @@ function FeatureProduct({ product }: { product: MerchProduct }) {
           >
             {buying ? (
               <>
-                <Loader2 size={16} className="animate-spin" />
+                <Loader2 size={16} aria-hidden="true" className="animate-spin" />
                 <span>CARGANDO...</span>
               </>
             ) : (
               <>
                 Compra ahora
-                <ArrowUpRight size={16} />
+                <ArrowUpRight size={16} aria-hidden="true" />
               </>
             )}
           </button>
@@ -357,7 +358,7 @@ function FeatureProduct({ product }: { product: MerchProduct }) {
             aria-label="Cerrar imagen"
             className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
-            <X size={24} />
+            <X size={24} aria-hidden="true" />
           </button>
 
           <img
@@ -413,6 +414,7 @@ function ProductGrid({ products }: { products: MerchProduct[] }) {
             </div>
             <ArrowUpRight
               size={16}
+              aria-hidden="true"
               className="text-black/20 group-hover:text-black transition-colors mt-0.5"
             />
           </div>

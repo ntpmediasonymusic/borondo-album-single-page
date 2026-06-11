@@ -362,7 +362,7 @@ const TRACKS: Track[] = [
 
 function SpotifyIcon({ size = 13 }: { size?: number }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="currentColor" viewBox="0 0 16 16">
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
       <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.669 11.538a.5.5 0 0 1-.686.165c-1.879-1.147-4.243-1.407-7.028-.77a.499.499 0 0 1-.222-.973c3.048-.696 5.662-.397 7.77.892a.5.5 0 0 1 .166.686m.979-2.178a.624.624 0 0 1-.858.205c-2.15-1.321-5.428-1.704-7.972-.932a.625.625 0 0 1-.362-1.194c2.905-.881 6.517-.454 8.986 1.063a.624.624 0 0 1 .206.858m.084-2.268C10.154 5.56 5.9 5.419 3.438 6.166a.748.748 0 1 1-.434-1.432c2.825-.857 7.523-.692 10.492 1.07a.747.747 0 1 1-.764 1.288" />
     </svg>
   );
@@ -370,7 +370,7 @@ function SpotifyIcon({ size = 13 }: { size?: number }) {
 
 function AppleMusicIcon({ size = 13 }: { size?: number }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="currentColor" viewBox="0 0 16 16">
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
       <path fillRule="evenodd" d="m10.995 0 .573.001q.241 0 .483.007c.35.01.705.03 1.051.093.352.063.68.166.999.329a3.36 3.36 0 0 1 1.47 1.468c.162.32.265.648.328 1 .063.347.084.7.093 1.051q.007.241.007.483l.001.573v5.99l-.001.573q0 .241-.008.483c-.01.35-.03.704-.092 1.05a3.5 3.5 0 0 1-.33 1 3.36 3.36 0 0 1-1.468 1.468 3.5 3.5 0 0 1-1 .33 7 7 0 0 1-1.05.092q-.241.007-.483.008l-.573.001h-5.99l-.573-.001q-.241 0-.483-.008a7 7 0 0 1-1.052-.092 3.6 3.6 0 0 1-.998-.33 3.36 3.36 0 0 1-1.47-1.468 3.6 3.6 0 0 1-.328-1 7 7 0 0 1-.093-1.05Q.002 11.81 0 11.568V5.005l.001-.573q0-.241.007-.483c.01-.35.03-.704.093-1.05a3.6 3.6 0 0 1 .329-1A3.36 3.36 0 0 1 1.9.431 3.5 3.5 0 0 1 2.896.1 7 7 0 0 1 3.95.008Q4.19.002 4.432 0h.573zm-.107 2.518-4.756.959H6.13a.66.66 0 0 0-.296.133.5.5 0 0 0-.16.31c-.004.027-.01.08-.01.16v5.952c0 .14-.012.275-.106.39-.095.115-.21.15-.347.177l-.31.063c-.393.08-.65.133-.881.223a1.4 1.4 0 0 0-.519.333 1.25 1.25 0 0 0-.332.995c.031.297.166.582.395.792.156.142.35.25.578.296.236.047.49.031.858-.043.196-.04.38-.102.555-.205a1.4 1.4 0 0 0 .438-.405 1.5 1.5 0 0 0 .233-.55c.042-.202.052-.386.052-.588V6.347c0-.276.08-.35.302-.404.024-.005 3.954-.797 4.138-.833.257-.049.378.025.378.294v3.524c0 .14-.001.28-.096.396-.094.115-.211.15-.348.178l-.31.062c-.393.08-.649.133-.88.223a1.4 1.4 0 0 0-.52.334 1.26 1.26 0 0 0-.34.994c.03.297.174.582.404.792a1.2 1.2 0 0 0 .577.294c.237.048.49.03.858-.044.197-.04.381-.098.556-.202a1.4 1.4 0 0 0 .438-.405q.173-.252.233-.549a2.7 2.7 0 0 0 .044-.589V2.865c0-.273-.143-.443-.4-.42-.04.003-.383.064-.424.073" />
     </svg>
   );
@@ -378,7 +378,7 @@ function AppleMusicIcon({ size = 13 }: { size?: number }) {
 
 function YoutubeMusicIcon({ size = 13 }: { size?: number }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="currentColor" viewBox="0 0 16 16">
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
       <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.01 2.01 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.01 2.01 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31 31 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.01 2.01 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A100 100 0 0 1 7.858 2zM6.4 5.209v4.818l4.157-2.408z" />
     </svg>
   );
@@ -386,7 +386,7 @@ function YoutubeMusicIcon({ size = 13 }: { size?: number }) {
 
 function DeezerIcon({ size = 13 }: { size?: number }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="currentColor" viewBox="0 0 640 640">
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="currentColor" viewBox="0 0 640 640" aria-hidden="true" focusable="false">
       <path d="M78.8 165.1C70.6 165.1 64 191.6 64 224.3C64 257 70.6 283.5 78.8 283.5C87 283.5 93.6 257 93.6 224.3C93.6 191.6 87 165.1 78.8 165.1zM512.7 104.9C505 104.9 498.2 122 493.3 149C485.6 102.3 473.1 72 459.1 72C442.3 72 428 114.9 421.1 177.4C414.5 132 404.3 103.2 392.8 103.2C376.7 103.2 363.2 160.1 358.1 239.4C348.7 198.6 334.9 173.1 319.8 173.1C304.7 173.1 291 198.6 281.5 239.4C276.4 160.1 262.9 103.2 246.8 103.2C235.3 103.2 225.1 132 218.5 177.4C211.9 114.9 197.3 72 180.7 72C166.7 72 154.2 102.4 146.5 149C141.7 122 134.8 104.9 127.1 104.9C112.8 104.9 101.1 164.1 101.1 237C101.1 309.9 113 369.2 127.3 369.2C133.2 369.2 138.8 359.3 143.1 342.4C150 404.1 164.3 446.5 181.1 446.5C194.1 446.5 205.6 421 213.2 380.9C218.6 457.2 231.8 511.3 247.4 511.3C257.1 511.3 266 489.9 272.7 454.9C280.6 527.1 299 577.6 320.4 577.6C341.8 577.6 359.9 527.1 368.1 454.9C374.7 489.9 383.7 511.3 393.4 511.3C409 511.3 422.2 457.2 427.6 380.9C435.3 421 447 446.5 459.7 446.5C476.3 446.5 490.6 404.2 497.7 342.4C502 359.2 507.4 369.2 513.5 369.2C527.8 369.2 539.5 310 539.5 237.1C539.5 164.2 527 104.9 512.7 104.9zM561.2 165.1C553 165.1 546.4 191.6 546.4 224.3C546.4 257 553 283.5 561.2 283.5C569.4 283.5 576 257 576 224.3C576 191.6 569.4 165.1 561.2 165.1z" />
     </svg>
   );
@@ -394,7 +394,7 @@ function DeezerIcon({ size = 13 }: { size?: number }) {
 
 function AmazonMusicIcon({ size = 13 }: { size?: number }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="currentColor" viewBox="0 0 16 16">
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
       <path d="M10.813 11.968c.157.083.36.074.5-.05l.005.005a90 90 0 0 1 1.623-1.405c.173-.143.143-.372.006-.563l-.125-.17c-.345-.465-.673-.906-.673-1.791v-3.3l.001-.335c.008-1.265.014-2.421-.933-3.305C10.404.274 9.06 0 8.03 0 6.017 0 3.77.75 3.296 3.24c-.047.264.143.404.316.443l2.054.22c.19-.009.33-.196.366-.387.176-.857.896-1.271 1.703-1.271.435 0 .929.16 1.188.55.264.39.26.91.257 1.376v.432q-.3.033-.621.065c-1.113.114-2.397.246-3.36.67C3.873 5.91 2.94 7.08 2.94 8.798c0 2.2 1.387 3.298 3.168 3.298 1.506 0 2.328-.354 3.489-1.54l.167.246c.274.405.456.675 1.047 1.166ZM6.03 8.431C6.03 6.627 7.647 6.3 9.177 6.3v.57c.001.776.002 1.434-.396 2.133-.336.595-.87.961-1.465.961-.812 0-1.286-.619-1.286-1.533M.435 12.174c2.629 1.603 6.698 4.084 13.183.997.28-.116.475.078.199.431C13.538 13.96 11.312 16 7.57 16 3.832 16 .968 13.446.094 12.386c-.24-.275.036-.4.199-.299z" />
       <path d="M13.828 11.943c.567-.07 1.468-.027 1.645.204.135.176-.004.966-.233 1.533-.23.563-.572.961-.762 1.115s-.333.094-.23-.137c.105-.23.684-1.663.455-1.963-.213-.278-1.177-.177-1.625-.13l-.09.009q-.142.013-.233.024c-.193.021-.245.027-.274-.032-.074-.209.779-.556 1.347-.623" />
     </svg>
@@ -431,6 +431,7 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
   return (
     <div
       onClick={handleClick}
+      aria-hidden={isSelected ? undefined : "true"}
       className={`flex-none w-[72vw] sm:w-[290px] lg:w-[320px] mr-3 lg:mr-5 transition-opacity duration-[400ms] flex flex-col select-none ${isSelected ? "opacity-100" : "opacity-40 cursor-pointer"}`}
     >
       <div className="border border-white/10 bg-white/[0.04] group flex-1 flex flex-col">
@@ -469,6 +470,7 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
+              tabIndex={isSelected ? undefined : -1}
               className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-colors duration-300 flex items-center justify-center"
               aria-label={`Ver video de ${track.title}`}
             >
@@ -490,6 +492,7 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
           <div className="flex items-center justify-between mb-2">
             <span
               className="text-white/15"
+              aria-hidden="true"
               style={{
                 fontFamily: "'Raleway', sans-serif",
                 fontSize: "2rem",
@@ -555,6 +558,7 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); onToggleExpand(); }}
+              tabIndex={isSelected ? undefined : -1}
               className="mt-1.5 text-sm text-white/40 hover:text-white/70 transition-colors tracking-wide cursor-pointer"
               style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500 }}
             >
@@ -574,27 +578,27 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
               </span>
               <div className="flex items-center gap-3" onClick={(e) => e.stopPropagation()}>
                 {track.spotifyUrl && (
-                  <a href={track.spotifyUrl} target="_blank" rel="noopener noreferrer" className="text-white/65 hover:text-white transition-colors" aria-label="Escuchar en Spotify">
+                  <a href={track.spotifyUrl} target="_blank" rel="noopener noreferrer" tabIndex={isSelected ? undefined : -1} className="text-white/65 hover:text-white transition-colors" aria-label="Escuchar en Spotify">
                     <SpotifyIcon size={16} />
                   </a>
                 )}
                 {track.appleMusicUrl && (
-                  <a href={track.appleMusicUrl} target="_blank" rel="noopener noreferrer" className="text-white/65 hover:text-white transition-colors" aria-label="Escuchar en Apple Music">
+                  <a href={track.appleMusicUrl} target="_blank" rel="noopener noreferrer" tabIndex={isSelected ? undefined : -1} className="text-white/65 hover:text-white transition-colors" aria-label="Escuchar en Apple Music">
                     <AppleMusicIcon size={16} />
                   </a>
                 )}
                 {track.youtubeMusicUrl && (
-                  <a href={track.youtubeMusicUrl} target="_blank" rel="noopener noreferrer" className="text-white/65 hover:text-white transition-colors" aria-label="Escuchar en YouTube Music">
+                  <a href={track.youtubeMusicUrl} target="_blank" rel="noopener noreferrer" tabIndex={isSelected ? undefined : -1} className="text-white/65 hover:text-white transition-colors" aria-label="Escuchar en YouTube Music">
                     <YoutubeMusicIcon size={16} />
                   </a>
                 )}
                 {track.amazonMusicUrl && (
-                  <a href={track.amazonMusicUrl} target="_blank" rel="noopener noreferrer" className="text-white/65 hover:text-white transition-colors" aria-label="Escuchar en Amazon Music">
+                  <a href={track.amazonMusicUrl} target="_blank" rel="noopener noreferrer" tabIndex={isSelected ? undefined : -1} className="text-white/65 hover:text-white transition-colors" aria-label="Escuchar en Amazon Music">
                     <AmazonMusicIcon size={16} />
                   </a>
                 )}
                 {track.deezerUrl && (
-                  <a href={track.deezerUrl} target="_blank" rel="noopener noreferrer" className="text-white/65 hover:text-white transition-colors" aria-label="Escuchar en Deezer">
+                  <a href={track.deezerUrl} target="_blank" rel="noopener noreferrer" tabIndex={isSelected ? undefined : -1} className="text-white/65 hover:text-white transition-colors" aria-label="Escuchar en Deezer">
                     <DeezerIcon size={16} />
                   </a>
                 )}
@@ -697,9 +701,9 @@ export function TrackByTrack() {
             type="button"
             onClick={scrollPrev}
             className="w-9 h-9 border border-white/20 flex items-center justify-center hover:border-white hover:bg-white hover:text-black transition-all text-white cursor-pointer"
-            aria-label="Cancion anterior"
+            aria-label="Canción anterior"
           >
-            <ArrowLeft size={13} />
+            <ArrowLeft size={13} aria-hidden="true" />
           </button>
 
           <div className="flex items-center gap-1.5 min-w-[4rem] justify-center">
@@ -722,9 +726,9 @@ export function TrackByTrack() {
             type="button"
             onClick={scrollNext}
             className="w-9 h-9 border border-white/20 flex items-center justify-center hover:border-white hover:bg-white hover:text-black transition-all text-white cursor-pointer"
-            aria-label="Siguiente cancion"
+            aria-label="Siguiente canción"
           >
-            <ArrowRight size={13} />
+            <ArrowRight size={13} aria-hidden="true" />
           </button>
         </div>
 
