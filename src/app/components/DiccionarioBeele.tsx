@@ -144,11 +144,15 @@ function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: 
     <div
       onClick={handleClick}
       aria-hidden={isSelected ? undefined : "true"}
-      className={`flex-none w-[80vw] sm:w-[300px] lg:w-[330px] mr-3 lg:mr-5 transition-opacity duration-[400ms] select-none ${
-        isSelected ? "opacity-100" : "opacity-35 cursor-pointer"
+      className={`flex-none w-[80vw] sm:w-[300px] lg:w-[330px] mr-3 lg:mr-5 select-none ${
+        isSelected ? "" : "cursor-pointer"
       }`}
     >
-      <div className="border border-black/10 bg-white relative overflow-hidden group">
+      <div
+        className={`border bg-white relative overflow-hidden group transition-all duration-[400ms] ${
+          isSelected ? "border-black/10" : "border-black/5 scale-[0.98]"
+        }`}
+      >
         {/* Ghost letter background */}
         <div
           className="absolute top-0 right-0 select-none pointer-events-none leading-none"
@@ -171,7 +175,6 @@ function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: 
           {/* Entry number + YT link */}
           <div className="flex items-center justify-between mb-5">
             <span
-              className="text-black/15"
               aria-hidden="true"
               style={{
                 fontFamily: "'Raleway', sans-serif",
@@ -179,6 +182,8 @@ function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: 
                 fontSize: "1.75rem",
                 lineHeight: 1,
                 letterSpacing: "0.04em",
+                color: "transparent",
+                WebkitTextStroke: "1px rgba(0,0,0,0.35)",
               }}
             >
               {num}
@@ -226,7 +231,10 @@ function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: 
             >
               {entry.phonetic}
             </span>
-            <span className="text-black/25 text-base" aria-hidden="true">·</span>
+            <span
+              aria-hidden="true"
+              className="inline-block w-1 h-1 rounded-full bg-black/40 shrink-0"
+            />
             <span
               className="text-[#3d3d3d] text-base tracking-[0.15em] uppercase"
               style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500 }}
@@ -256,7 +264,7 @@ function EntryCard({ entry, isSelected, isExpanded, onToggleExpand, onSelect }: 
               type="button"
               onClick={(e) => { e.stopPropagation(); onToggleExpand(); }}
               tabIndex={isSelected ? undefined : -1}
-              className="mb-4 text-sm text-black/40 hover:text-black transition-colors tracking-wide cursor-pointer"
+              className="mb-4 text-sm text-black/60 hover:text-black transition-colors tracking-wide cursor-pointer"
               style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500 }}
             >
               {isExpanded ? "Ver menos" : "Ver más"}

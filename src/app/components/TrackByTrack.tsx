@@ -432,9 +432,13 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
     <div
       onClick={handleClick}
       aria-hidden={isSelected ? undefined : "true"}
-      className={`flex-none w-[72vw] sm:w-[290px] lg:w-[320px] mr-3 lg:mr-5 transition-opacity duration-[400ms] flex flex-col select-none ${isSelected ? "opacity-100" : "opacity-40 cursor-pointer"}`}
+      className={`flex-none w-[72vw] sm:w-[290px] lg:w-[320px] mr-3 lg:mr-5 flex flex-col select-none ${isSelected ? "" : "cursor-pointer"}`}
     >
-      <div className="border border-white/10 bg-white/[0.04] group flex-1 flex flex-col">
+      <div
+        className={`border group flex-1 flex flex-col transition-colors duration-[400ms] ${
+          isSelected ? "border-white/10 bg-white/[0.04]" : "border-white/5 bg-white/[0.02]"
+        }`}
+      >
         {/* Image */}
         <div className="relative overflow-hidden" style={{ aspectRatio: "1/1" }}>
           <img
@@ -443,8 +447,15 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
             loading="lazy"
             decoding="async"
             draggable={false}
-            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-[1.03] pointer-events-none"
+            className={`w-full h-full object-cover transition-all duration-700 pointer-events-none ${
+              isSelected ? "group-hover:scale-[1.03]" : "grayscale-[55%] brightness-[0.65] scale-[1.02]"
+            }`}
           />
+
+          {/* Inactive-card dimming wash (decorative, non-text) */}
+          {!isSelected && (
+            <div className="absolute inset-0 bg-black/35 pointer-events-none" aria-hidden="true" />
+          )}
 
           {/* Track number ghost overlay */}
           <div
@@ -491,7 +502,6 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
           {/* Number + bonus tag */}
           <div className="flex items-center justify-between mb-2">
             <span
-              className="text-white/15"
               aria-hidden="true"
               style={{
                 fontFamily: "'Raleway', sans-serif",
@@ -499,6 +509,8 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
                 fontWeight: 900,
                 lineHeight: 1,
                 letterSpacing: "0.04em",
+                color: "transparent",
+                WebkitTextStroke: "1px rgba(255,255,255,0.35)",
               }}
             >
               {num}
@@ -559,7 +571,7 @@ function TrackSlide({ track, isSelected, isExpanded, onToggleExpand, onSelect }:
               type="button"
               onClick={(e) => { e.stopPropagation(); onToggleExpand(); }}
               tabIndex={isSelected ? undefined : -1}
-              className="mt-1.5 text-sm text-white/40 hover:text-white/70 transition-colors tracking-wide cursor-pointer"
+              className="mt-1.5 text-sm text-white/50 hover:text-white/70 transition-colors tracking-wide cursor-pointer"
               style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500 }}
             >
               {isExpanded ? "Ver menos" : "Ver más"}
